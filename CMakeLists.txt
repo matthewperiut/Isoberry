@@ -3,7 +3,50 @@ cmake_minimum_required(VERSION 3.19)
 project(Isoberry)
 
 set(CMAKE_CXX_STANDARD 20)
-add_executable(Isoberry main.cpp header/olcPixelGameEngine.h game/tool/v3.h game/tool/collider.cpp game/tool/collider.h game/tool/img.cpp game/tool/img.h utility/settings/resolution.cpp utility/settings/resolution.h utility/settings/settings.cpp utility/settings/settings.h game/game.cpp game/game.h game/objects/player.cpp game/objects/player.h utility/settings/native.h game/tool/DrawLineToSprite.h game/tool/DrawLineToSprite.cpp game/tool/SpriteSaving/lodepng.cpp game/tool/SpriteSaving/lodepng.h game/tool/SpriteSaving/svpng.h game/tool/SpriteSaving/saving.cpp game/tool/SpriteSaving/saving.h game/tool/art/colliderTemplate.cpp game/tool/art/colliderTemplate.h)
+set(ISOBERRY_VERSION 0.1)
+
+file (GLOB MY_SRC
+        "header/olcPixelGameEngine.h"
+        "main.cpp"
+        "utility/*.cpp"
+        "utility/*.h"
+        "utility/settings/*.cpp"
+        "utility/settings/*.h"
+        "assets/*.h"
+        "game/objects/*.cpp"
+        "game/objects/*.h"
+        "game/tool/*.cpp"
+        "game/tool/*.h"
+        "game/tool/SpriteSaving/*.cpp"
+        "game/tool/SpriteSaving/*.h"
+        "game/tool/art/*.cpp"
+        "game/tool/art/*.h"
+        "game/*.cpp"
+        "game/*.h")
+
+if (!APPLE)
+add_executable(Isoberry ${MY_SRC})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+endif (!APPLE)
+
+if (APPLE)
+    set(CUR_TARGET Isoberry)
+    set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
+
+    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns)
+    set_source_files_properties(${myApp_ICON} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+
+    add_executable(${CUR_TARGET} MACOSX_BUNDLE ${MY_SRC} ${myApp_ICON})
+    set_target_properties(${CUR_TARGET} PROPERTIES
+            BUNDLE True
+            MACOSX_BUNDLE_GUI_IDENTIFIER my.domain.style.identifier.${CUR_TARGET}
+            MACOSX_BUNDLE_BUNDLE_NAME ${CUR_TARGET}
+            MACOSX_BUNDLE_BUNDLE_VERSION ${ISOBERRY_VERSION}
+            MACOSX_BUNDLE_SHORT_VERSION_STRING ${ISOBERRY_VERSION}
+            )
+endif(APPLE)
 
 if (UNIX)
     # X11

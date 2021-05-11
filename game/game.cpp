@@ -4,26 +4,28 @@
 
 #define OLC_PGE_APPLICATION
 #include "game.h"
+#include "../utility/assetPath.h"
 
 Game::Game() {
     sAppName = "Isoberry";
 }
 
-bool Game::OnUserCreate() {
+bool Game::OnUserCreate()
+{
+    Clear(olc::Pixel(52, 92, 72));
+    other.DebugDraw(*this);
+
+    test = new Img(GetAssetPath()+"test.png");
     trying = collider.CreateSpriteDebugDraw();
     trdec = new olc::Decal(trying);
+
     return true;
 }
 
-bool Game::OnUserUpdate(float fElapsedTime) {
-    Clear(olc::Pixel(52, 92, 72));
-    //collider.DebugDraw(*this,olc::vf2d(0,0));
+bool Game::OnUserUpdate(float fElapsedTime)
+{
+    DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
     DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
-
-    other.DebugDraw(*this);
-
-    //if(collider.isColliding(other))
-    //    printf("y\n");
 
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
@@ -42,6 +44,8 @@ bool Game::OnUserUpdate(float fElapsedTime) {
 }
 
 bool Game::OnUserDestroy() {
+    delete trying;
     delete trdec;
+    delete test;
     return true;
 }

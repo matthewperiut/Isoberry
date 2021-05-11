@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "tool/img.h"
 #include "../header/olcPixelGameEngine.h"
 #include "tool/collider.h"
 
@@ -14,6 +15,7 @@ public:
 public:
     olc::Sprite* trying;
     olc::Decal* trdec;
+    Img* test;
     v3 position = v3(0,0,0);
     v3 otherPosition = v3(0,0,0);
     Collider collider = Collider(v3(30,10,10),position);
