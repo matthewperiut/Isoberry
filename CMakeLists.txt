@@ -5,6 +5,12 @@ project(Isoberry)
 set(CMAKE_CXX_STANDARD 20)
 set(ISOBERRY_VERSION 0.1)
 
+if(${CMAKE_SYSTEM} MATCHES "Linux")
+    set(LINUX 1)
+endif(${CMAKE_SYSTEM} MATCHES "Linux")
+
+set(GANGSTA)
+
 file (GLOB MY_SRC
         "header/olcPixelGameEngine.h"
         "main.cpp"
@@ -24,10 +30,10 @@ file (GLOB MY_SRC
         "game/*.cpp"
         "game/*.h")
 
-if (!APPLE)
-add_executable(Isoberry ${MY_SRC})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
-endif (!APPLE)
+if (WIN32 OR LINUX)
+    add_executable(Isoberry ${MY_SRC})
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+endif (WIN32 OR LINUX)
 
 if (APPLE)
     set(CUR_TARGET Isoberry)
@@ -50,12 +56,12 @@ endif(APPLE)
 
 if (UNIX)
     # X11
-    if(!APPLE)
+    if(LINUX)
         find_package(X11 REQUIRED)
         include_directories(${X11_INCLUDE_DIR})
         link_directories(${X11_LIBRARIES})
         target_link_libraries(Isoberry ${X11_LIBRARIES})
-    endif(!APPLE)
+    endif(LINUX)
     # GLUT
     if(APPLE)
         find_package(GLUT REQUIRED)

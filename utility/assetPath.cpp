@@ -4,9 +4,9 @@
 
 #include "assetPath.h"
 
-#include <mach-o/dyld.h>
-
 #ifdef __APPLE__
+    #include <mach-o/dyld.h>
+
     std::string GetAssetPath()
     {
         static std::string pathStr;
