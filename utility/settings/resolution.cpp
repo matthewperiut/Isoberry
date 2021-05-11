@@ -26,7 +26,7 @@ vi2d GetNativeResolution()
 	GetClientRect(hd, &rect);
 	int client_width = (rect.right - rect.left);
 	int client_height = (rect.bottom - rect.top);
-	return vi2d(client_width, client_height)
+	return vi2d(client_width, client_height);
 }
 #elif  __APPLE__
     #include <CoreGraphics/CGDisplayConfiguration.h>
