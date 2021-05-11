@@ -29,7 +29,14 @@ vi2d GetNativeResolution()
 	return vi2d(client_width, client_height)
 }
 #elif  __APPLE__
-    //todo: Apple screen resolution
+    #include <CoreGraphics/CGDisplayConfiguration.h>
+    vi2d GetNativeResolution()
+    {
+        auto mainDisplayId = CGMainDisplayID();
+        int width = CGDisplayPixelsWide(mainDisplayId);
+        int height = CGDisplayPixelsHigh(mainDisplayId);
+        return vi2d(width, height);
+    }
 #endif
 
 vi2d ConvertToHeight(vi2d input, int& scaleReturned)
