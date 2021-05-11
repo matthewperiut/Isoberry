@@ -18,7 +18,7 @@ bool Collider::isColliding(Collider &c)
     Collider& a = c;
     Collider& b = *this;
 
-    //https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection\
+    //https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
     return (a.minY() <= b.maxY() && a.maxY() >= b.minY()) && a.minZ() <= b.maxZ() && a.maxZ() >= b.minZ() && a.minX() <= b.maxX() && a.maxX() >= b.minX();
 }
 
