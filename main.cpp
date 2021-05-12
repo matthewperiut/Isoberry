@@ -5,7 +5,8 @@
 Game game;
 Settings settings(GetAssetPath() + "settings.txt");
 
-int main() {
+int main()
+{
     if (game.Construct(settings.resolution.x, settings.resolution.y, settings.scale, settings.scale, settings.fullscreen, settings.vsync, true))
         game.Start();
     return 0;

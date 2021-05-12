@@ -28,7 +28,12 @@ bool NumberTextBox::ListenForInput(olc::PixelGameEngine &g)
                 input += std::to_string(i);
         }
     }
-    if(g.GetKey(olc::Key::O).bPressed)
+    if(g.GetKey(olc::Key::BACK).bPressed)
+    {
+        if(!input.empty())
+            input.pop_back();
+    }
+    if(g.GetKey(olc::Key::ENTER).bPressed)
     {
         return true;
     }

@@ -27,7 +27,7 @@
         return pathStr;
     }
 #endif
-#ifdef _WIN32 || __linux__
+#if defined(_WIN32) || defined(__linux__)
     std::string GetAssetPath()
     {
         return "./assets/";

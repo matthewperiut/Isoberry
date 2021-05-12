@@ -7,12 +7,14 @@
 #include "tool/img.h"
 #include "../header/olcPixelGameEngine.h"
 #include "tool/collider.h"
+#include "tool/input/ResolutionDialogue.h"
 
 class Game : public olc::PixelGameEngine
 {
 public:
     Game();
 public:
+    ResolutionDialogue res;
     olc::Sprite* trying;
     olc::Decal* trdec;
     Img* test;
