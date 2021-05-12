@@ -6,6 +6,7 @@
 #define OLC_PGE_APPLICATION
 #include "game.h"
 #include "../utility/assetPath.h"
+#include "tool/input/Options.h"
 
 Game::Game() {
     sAppName = "Isoberry";
@@ -28,7 +29,8 @@ bool Game::OnUserUpdate(float fElapsedTime)
     res.handle(*this);
     DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
     DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
-
+    VSyncToggle(*this, fElapsedTime, olc::Key::F2);
+    FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
     GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;

@@ -7,7 +7,7 @@
 class ResolutionDialogue
 {
 private:
-    olc::vi2d textPosition{ 20,20 };
+    olc::vi2d textPosition{ 20,0 };
     bool CurrentlyDialoging = false;
     int step = 0;
     NumberTextBox width;

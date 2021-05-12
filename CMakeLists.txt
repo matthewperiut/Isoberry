@@ -9,8 +9,6 @@ if(${CMAKE_SYSTEM} MATCHES "Linux")
     set(LINUX 1)
 endif(${CMAKE_SYSTEM} MATCHES "Linux")
 
-set(GANGSTA)
-
 file (GLOB MY_SRC
         "header/olcPixelGameEngine.h"
         "main.cpp"

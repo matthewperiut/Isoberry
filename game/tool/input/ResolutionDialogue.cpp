@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include "Replace.h"
 #include "ResolutionDialogue.h"
 #include "../../../utility/assetPath.h"
 #include "../../../utility/settings/native.h"
@@ -16,11 +17,8 @@ ResolutionDialogue::ResolutionDialogue()
 
 void ResolutionDialogue::UpdateFile()
 {
-    std::string path = GetAssetPath() + "settings.txt";
-    std::cout << path << std::endl;
-    std::ofstream file(path);
-    file << "resolution " << width.GetInput() << " " << height.GetInput();
-    file.close();
+    std::string newLine = "resolution " + std::to_string(width.GetInput()) + " " + std::to_string(height.GetInput());
+    HandleUpdateSetting("resolution",newLine);
 }
 
 void ResolutionDialogue::handle(olc::PixelGameEngine &g)
