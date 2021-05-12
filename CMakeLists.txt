@@ -27,6 +27,8 @@ file (GLOB MY_SRC
         "game/tool/SpriteSaving/*.h"
         "game/tool/art/*.cpp"
         "game/tool/art/*.h"
+        "game/tool/input/*.cpp"
+        "game/tool/input/*.h"
         "game/*.cpp"
         "game/*.h")
 
