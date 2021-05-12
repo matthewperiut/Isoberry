@@ -2,6 +2,7 @@
 // Created by matthewperiut on 5/7/21.
 //
 
+#define OLC_IMAGE_STB
 #define OLC_PGE_APPLICATION
 #include "game.h"
 #include "../utility/assetPath.h"

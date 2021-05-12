@@ -42,7 +42,7 @@ if (APPLE)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
 
-    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns)
+    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns header/stb_image.h)
     set_source_files_properties(${myApp_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 
@@ -80,10 +80,5 @@ if (UNIX)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
     target_link_libraries(Isoberry Threads::Threads)
-
-    find_package(PNG REQUIRED)
-    include_directories(${PNG_INCLUDE_DIR})
-    link_directories(${PNG_LIBRARIES})
-    target_link_libraries(Isoberry ${PNG_LIBRARIES})
 
 endif (UNIX)
