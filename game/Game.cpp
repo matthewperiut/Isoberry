@@ -27,16 +27,21 @@ bool Game::OnUserCreate()
 bool Game::OnUserUpdate(float fElapsedTime)
 {
     res.handle(*this);
-    DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
-    DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
     VSyncToggle(*this, fElapsedTime, olc::Key::F2);
     FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
+
+    //DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
+    DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
+    DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
+
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
     GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
     GetKey(olc::Key::A).bHeld ? velocity.x = -1 : 0;
     GetKey(olc::Key::S).bHeld ? velocity.z = -1 : 0;
     GetKey(olc::Key::D).bHeld ? velocity.x =  1 : 0;
+    GetKey(olc::Key::SPACE).bHeld ? velocity.y =  1 : 0;
+    GetKey(olc::Key::SHIFT).bHeld ? velocity.y =  -1 : 0;
     if(velocity.x && velocity.z)
     {
         velocity.x *= 0.7;

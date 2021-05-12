@@ -3,6 +3,6 @@
 //
 
 #pragma once
-#include "../Collider.h"
+#include "../collision/Collider.h"
 
 void MakeTemplateCollider(v3 size, std::string path);

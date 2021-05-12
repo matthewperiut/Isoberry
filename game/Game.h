@@ -6,7 +6,7 @@
 
 #include "tool/Img.h"
 #include "../header/olcPixelGameEngine.h"
-#include "tool/Collider.h"
+#include "tool/collision/Collider.h"
 #include "tool/input/ResolutionDialogue.h"
 
 class Game : public olc::PixelGameEngine
@@ -20,7 +20,7 @@ public:
     Img* test;
     v3 position = v3(0,0,0);
     v3 otherPosition = v3(0,0,0);
-    Collider collider = Collider(v3(30,10,10),position);
+    Collider collider = Collider(v3(10,10,10),position);
     Collider other = Collider(v3(10,10,10),otherPosition);
     bool OnUserCreate() override;
     bool OnUserUpdate(float fElapsedTime) override;

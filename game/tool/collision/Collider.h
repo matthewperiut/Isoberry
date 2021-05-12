@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "v3.h"
+#include "../v3.h"
 
 class Collider
 {
@@ -36,13 +36,16 @@ private:
     float maxX();
     float maxY();
     float maxZ();
+    float minH();
+    float maxH();
 
-    olc::vf2d CornerOnScreen(bool mx, bool my, bool mz, olc::vf2d *offset = nullptr);
 public:
     olc::vf2d Get2dSize();
     olc::vf2d GetTopLeft(olc::vf2d offset);
     olc::vi2d CornerOnScreenNormalized(bool mx, bool my, bool mz);
     olc::Sprite* CreateSpriteDebugDraw(olc::Pixel outlineColor = olc::WHITE);
+
+    olc::vf2d CornerOnScreen(bool mx, bool my, bool mz, olc::vf2d *offset = nullptr);
 
     void DebugDraw(olc::PixelGameEngine &game, olc::vf2d offset = olc::vf2d(0,0));
 };

@@ -2,9 +2,9 @@
 // Created by matthewperiut on 5/7/21.
 //
 
-#include "../Game.h"
+#include "../../Game.h"
 #include "Collider.h"
-#include "DrawLineToSprite.h"
+#include "../draw_sprites/DrawLineToSprite.h"
 #include <cmath>
 
 Collider::Collider(v3 size, v3 &position)
@@ -121,4 +121,12 @@ float Collider::maxY()
 float Collider::maxZ()
 {
     return position->z + size.z;
+}
+
+float Collider::minH() {
+    return CornerOnScreen(1,0,1).x;
+}
+
+float Collider::maxH() {
+    return CornerOnScreen(0,0,0).x;
 }

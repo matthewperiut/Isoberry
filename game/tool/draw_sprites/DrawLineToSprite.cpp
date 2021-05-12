@@ -1,7 +1,7 @@
 //
 // Created by matthewperiut on 5/9/21.
 //
-#include "../../header/olcPixelGameEngine.h"
+#include "../../../header/olcPixelGameEngine.h"
 
 void DrawLineToSprite(int32_t x1, int32_t y1, int32_t x2, int32_t y2, olc::Pixel p, olc::Sprite& spr, uint32_t pattern)
 {
