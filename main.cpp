@@ -1,6 +1,6 @@
-#include "game/game.h"
-#include "utility/settings/settings.h"
-#include "utility/assetPath.h"
+#include "game/Game.h"
+#include "utility/settings/Settings.h"
+#include "utility/AssetPath.h"
 
 Game game;
 Settings settings(GetAssetPath() + "settings.txt");

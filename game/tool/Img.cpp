@@ -2,7 +2,7 @@
 // Created by matthewperiut on 5/6/21.
 //
 
-#include "img.h"
+#include "Img.h"
 void Img::SetFilePath(string path)
 {
     filePath = path;

@@ -2,9 +2,9 @@
 // Created by matthewperiut on 5/7/21.
 //
 
-#include "native.h"
-#include "settings.h"
-#include "resolution.h"
+#include "Native.h"
+#include "Settings.h"
+#include "Resolution.h"
 
 Settings::Settings(std::string file)
 {

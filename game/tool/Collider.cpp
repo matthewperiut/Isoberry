@@ -2,8 +2,8 @@
 // Created by matthewperiut on 5/7/21.
 //
 
-#include "../game.h"
-#include "collider.h"
+#include "../Game.h"
+#include "Collider.h"
 #include "DrawLineToSprite.h"
 #include <cmath>
 

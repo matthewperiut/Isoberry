@@ -4,7 +4,7 @@
 
 #include "Options.h"
 #include "Replace.h"
-#include "../../../utility/settings/settings.h"
+#include "../../../utility/settings/Settings.h"
 
 extern Settings settings;
 

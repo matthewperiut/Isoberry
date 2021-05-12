@@ -2,7 +2,7 @@
 // Created by Matthew Periut on 5/11/21.
 //
 
-#include "assetPath.h"
+#include "AssetPath.h"
 
 #ifdef __APPLE__
     #include <mach-o/dyld.h>

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "tool/img.h"
+#include "tool/Img.h"
 #include "../header/olcPixelGameEngine.h"
-#include "tool/collider.h"
+#include "tool/Collider.h"
 #include "tool/input/ResolutionDialogue.h"
 
 class Game : public olc::PixelGameEngine

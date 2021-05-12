@@ -3,7 +3,7 @@
 //
 
 #include "Replace.h"
-#include "../../../utility/assetPath.h"
+#include "../../../utility/AssetPath.h"
 #include <fstream>
 #include <sstream>
 #include <filesystem>

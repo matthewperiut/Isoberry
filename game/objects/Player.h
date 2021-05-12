@@ -6,7 +6,7 @@
 #define ISOBERRY_PLAYER_H
 
 
-class player {
+class Player {
 
 };
 

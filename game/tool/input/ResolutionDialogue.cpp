@@ -6,8 +6,8 @@
 #include <iostream>
 #include "Replace.h"
 #include "ResolutionDialogue.h"
-#include "../../../utility/assetPath.h"
-#include "../../../utility/settings/native.h"
+#include "../../../utility/AssetPath.h"
+#include "../../../utility/settings/Native.h"
 
 ResolutionDialogue::ResolutionDialogue()
 {

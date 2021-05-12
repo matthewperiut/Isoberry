@@ -7,7 +7,7 @@
 #include "../../header/olcPixelGameEngine.h"
 #include <cmath>
 #include <string>
-#include "../../utility/settings/settings.h"
+#include "../../utility/settings/Settings.h"
 
 extern Settings settings;
 

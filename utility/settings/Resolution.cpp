@@ -1,8 +1,8 @@
 //
 // Created by matthewperiut on 5/6/21.
 //
-#include "native.h"
-#include "resolution.h"
+#include "Native.h"
+#include "Resolution.h"
 
 #ifdef __linux__
 #include <X11/Xlib.h>
