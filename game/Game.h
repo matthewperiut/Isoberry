@@ -8,20 +8,21 @@
 #include "../header/olcPixelGameEngine.h"
 #include "tool/collision/Collider.h"
 #include "tool/input/ResolutionDialogue.h"
+#include "tool/layering/DrawOrderSystem.h"
 
 class Game : public olc::PixelGameEngine
 {
 public:
     Game();
 public:
+    DrawOrderSystem dos;
     ResolutionDialogue res;
-    olc::Sprite* trying;
-    olc::Decal* trdec;
-    Img* test;
-    v3 position = v3(0,0,0);
-    v3 otherPosition = v3(0,0,0);
-    Collider collider = Collider(v3(10,10,10),position);
-    Collider other = Collider(v3(10,10,10),otherPosition);
+
+    std::vector<v3> position;
+    std::vector<Collider> colliders;
+    olc::Sprite* boxSpr;
+    olc::Decal* boxDec;
+
     bool OnUserCreate() override;
     bool OnUserUpdate(float fElapsedTime) override;
     bool OnUserDestroy() override;

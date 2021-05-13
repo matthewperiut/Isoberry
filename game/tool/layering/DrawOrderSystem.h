@@ -15,18 +15,11 @@
 class DrawOrderSystem
 {
 private:
-    std::vector<Collider*> staticObjects;
-    std::vector<Collider*> dynamicObjects;
-    std::vector<Collider*> combinedObjects;
+    std::vector<Collider*> objects;
 
-    static void InsertObject(std::vector<Collider*> &vc, Collider* c);
 public:
-    void InsertStaticObject(Collider* c);
-    void InsertDynamicObject(Collider* c);
-    void UpdateDynamicObjects();
+    void InsertObject(Collider &c);
+    void SortObjects();
 
-    std::vector<Collider*>* GetObjects() { return &combinedObjects; }
-
-    // Overlap calculation
-    void SortStaticObjects();
+    std::vector<Collider*>* GetObjects() { return &objects; }
 };

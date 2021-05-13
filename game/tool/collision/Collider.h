@@ -13,6 +13,8 @@ private:
     olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
 public:
+    short priority = 0;
+public:
     Collider(v3 size, v3& position);
     bool isColliding(Collider& c);
 private:
@@ -39,6 +41,8 @@ public:
     float maxZ();
     float minH();
     float maxH();
+    float max2DY();
+    float min2DY();
 
 public:
     olc::vf2d Get2dSize();
@@ -50,11 +54,8 @@ public:
 
     void DebugDraw(olc::PixelGameEngine &game, olc::vf2d offset = olc::vf2d(0,0));
 
+    bool isAbove(Collider &a, Collider &b);
     bool isAbove(Collider &box);
 
     bool Overlaps(Collider &box);
-
-    float max2DY();
-
-    float min2DY();
 };

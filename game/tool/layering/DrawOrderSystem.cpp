@@ -3,39 +3,19 @@
 //
 
 #include "DrawOrderSystem.h"
+#include <algorithm>
 
-void DrawOrderSystem::InsertObject(std::vector<Collider*> &vc, Collider *c)
+void DrawOrderSystem::InsertObject(Collider& c)
 {
-    for(int i = 0; i < vc.size(); i++)
+    objects.push_back(&c);
+}
+
+void DrawOrderSystem::SortObjects()
+{
+    auto sortRuleLambda = [] (Collider* &a, Collider* &b) -> bool
     {
-        if(c->isAbove(*(vc[i])))
-        {
-            vc.insert(vc.begin()+i, c);
-            break;
-        }
-    }
-    //vc[0].
+        return !a->isAbove(*b);
+    };
+
+    std::sort(objects.begin(), objects.end(), sortRuleLambda);
 }
-
-
-void DrawOrderSystem::InsertStaticObject(Collider *c)
-{
-    staticObjects.push_back(c);
-}
-void DrawOrderSystem::InsertDynamicObject(Collider *c)
-{
-    dynamicObjects.push_back(c);
-}
-
-void DrawOrderSystem::SortStaticObjects()
-{
-
-}
-
-
-
-void DrawOrderSystem::UpdateDynamicObjects()
-{
-
-}
-

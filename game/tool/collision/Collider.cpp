@@ -95,7 +95,14 @@ olc::vf2d Collider::GetTopLeft(olc::vf2d offset)
 // For the purpose of drawing into a sprite
 olc::vi2d Collider::CornerOnScreenNormalized(bool mx, bool my, bool mz)
 {
+    v3 holder = *position;
+    position->x = 0;
+    position->y = 0;
+    position->z = 0;
     v3 mpos = v3(mx ? minX() : maxX(), my ? minY() : maxY(), mz ? minZ() : maxZ());
+    position->x = holder.x;
+    position->y = holder.y;
+    position->z = holder.z;
     return mpos.toScreenNoCentering();
 }
 
@@ -150,18 +157,25 @@ bool Collider::Overlaps(Collider &box)
 
 bool Collider::isAbove(Collider &box) {
 
+    return isAbove(*this, box);
+}
+
+bool Collider::isAbove(Collider &a, Collider &b)
+{
     // test for intersection x-axis
     // (lower x value is in front)
-    if (minX() >= box.maxX()) { return true; }
-    else if (box.minX() >= maxX()) { return false; }
+    if (a.minX() >= b.maxX()) { return true; }
+    else if (b.minX() >= a.maxX()) { return false; }
 
     // test for intersection y-axis
     // (lower y value is in front)
-    if (minY() >= box.maxY()) { return true; }
-    else if (box.minY() >= maxY()) { return false; }
+    if (a.minY() >= b.maxY()) { return true; }
+    else if (b.minY() >= a.maxY()) { return false; }
 
     // test for intersection z-axis
     // (higher z value is in front)
-    if (minZ() >= box.maxZ()) { return false; }
-    else if (box.minZ() >= maxZ()) { return true; }
+    if (a.minZ() >= b.maxZ()) { return false; }
+    else if (b.minZ() >= a.maxZ()) { return true; }
+
+    return false;
 }

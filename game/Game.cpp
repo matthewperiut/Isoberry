@@ -15,11 +15,25 @@ Game::Game() {
 bool Game::OnUserCreate()
 {
     Clear(olc::Pixel(52, 92, 72));
-    other.DebugDraw(*this);
+    int sizeX = 10;
+    int sizeY = 10;
+    position.reserve(sizeX * sizeY);
+    colliders.reserve(sizeX * sizeY);
 
-    test = new Img(GetAssetPath()+"test.png");
-    trying = collider.CreateSpriteDebugDraw();
-    trdec = new olc::Decal(trying);
+    for(int i = 0; i < sizeX; i++)
+    {
+        for(int j = 0; j < sizeY; j++)
+        {
+            position[i*sizeX+j] = v3(i*11-50,0,j*11-50);
+            colliders[i*sizeX+j] = Collider(v3(10,10,10),position[i*sizeX+j]);
+            dos.InsertObject(colliders[i*sizeX+j]);
+        }
+
+    }
+    Collider temp = Collider(v3(10,10,10),position[0]);
+    std::cout << GetAssetPath()+"10x10test_box.png" << std::endl;
+    boxSpr = new olc::Sprite(GetAssetPath()+"10x10test_box.png");
+    boxDec = new olc::Decal(boxSpr);
 
     return true;
 }
@@ -27,38 +41,22 @@ bool Game::OnUserCreate()
 bool Game::OnUserUpdate(float fElapsedTime)
 {
 
-    Clear(olc::Pixel(52, 92, 72));
-
     res.handle(*this);
     VSyncToggle(*this, fElapsedTime, olc::Key::F2);
     FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
 
-    //DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
-    if(collider.isAbove(other))
+    // Sorting System DOS
+    dos.SortObjects();
+    std::vector<Collider*>* colliders = dos.GetObjects();
+    for(int i = 0; i < colliders->size(); i++)
     {
-        DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
-        DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
-    }
-    else
-    {
-        DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
-        DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
+        int color = (255/colliders->size())*i;
+        Collider &current = *((*colliders)[i]);
+        DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), boxDec, olc::vf2d(1,1), olc::Pixel(color,color,color));
+        //current.DebugDraw(*this);
     }
 
-    //other.DebugDraw(*this);
-    //TOP Draw(other.CornerOnScreen(1,0,0), olc::RED);
-    //BOTTOM Draw(other.CornerOnScreen(0,1,1), olc::RED);
-
-    if(other.Overlaps(collider))
-        Draw(0,0,olc::RED);
-    else
-        Draw(0,0,olc::BLACK);
-
-    DrawLine(other.maxH(), 0, other.maxH(), 200, olc::RED);
-    DrawLine(other.minH(), 0, other.minH(), 200, olc::RED);
-    DrawLine(collider.maxH(), 0, collider.maxH(), 200, olc::RED);
-    DrawLine(collider.minH(), 0, collider.minH(), 200, olc::RED);
-
+    /*
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
     GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
@@ -73,13 +71,14 @@ bool Game::OnUserUpdate(float fElapsedTime)
         velocity.z *= 0.7;
     }
     position += velocity * movement;
+    */
 
     return true;
 }
 
-bool Game::OnUserDestroy() {
-    delete trying;
-    delete trdec;
-    delete test;
+bool Game::OnUserDestroy()
+{
+    delete boxSpr;
+    delete boxDec;
     return true;
 }
