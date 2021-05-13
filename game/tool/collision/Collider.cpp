@@ -11,6 +11,7 @@ Collider::Collider(v3 size, v3 &position)
 {
     this->position = &position;
     this->size = size;
+    Get2dSize();
 }
 
 bool Collider::isColliding(Collider &c)
@@ -31,7 +32,7 @@ olc::vf2d Collider::Get2dSize()
     end.x = CornerOnScreen(1, 0, 1).x;
     end.y = CornerOnScreen(0, 1, 1).y;
 
-    olc::vf2d size2d = end - start;
+    size2d = end - start;
     size2d = { std::abs(size2d.x), std::abs(size2d.y) };
     return size2d;
 }
@@ -123,10 +124,44 @@ float Collider::maxZ()
     return position->z + size.z;
 }
 
+float Collider::min2DY() {
+    return CornerOnScreen(1,0,0).y-1;
+}
+
+float Collider::max2DY() {
+    return CornerOnScreen(0,1,1).y+1;
+}
+
 float Collider::minH() {
-    return CornerOnScreen(1,0,1).x;
+    return CornerOnScreen(1,0,1).x-1;
 }
 
 float Collider::maxH() {
-    return CornerOnScreen(0,0,0).x;
+    return CornerOnScreen(0,0,0).x+1;
+}
+
+bool Collider::Overlaps(Collider &box)
+{
+    return minH() < box.maxH() &&
+           maxH() > box.minH() &&
+           min2DY() < box.max2DY() &&
+           max2DY() > box.min2DY();
+}
+
+bool Collider::isAbove(Collider &box) {
+
+    // test for intersection x-axis
+    // (lower x value is in front)
+    if (minX() >= box.maxX()) { return true; }
+    else if (box.minX() >= maxX()) { return false; }
+
+    // test for intersection y-axis
+    // (lower y value is in front)
+    if (minY() >= box.maxY()) { return true; }
+    else if (box.minY() >= maxY()) { return false; }
+
+    // test for intersection z-axis
+    // (higher z value is in front)
+    if (minZ() >= box.maxZ()) { return false; }
+    else if (box.minZ() >= maxZ()) { return true; }
 }

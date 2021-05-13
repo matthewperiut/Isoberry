@@ -26,13 +26,38 @@ bool Game::OnUserCreate()
 
 bool Game::OnUserUpdate(float fElapsedTime)
 {
+
+    Clear(olc::Pixel(52, 92, 72));
+
     res.handle(*this);
     VSyncToggle(*this, fElapsedTime, olc::Key::F2);
     FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
 
     //DrawDecal(olc::vf2d(0,0), test->GetDecPtr());
-    DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
-    DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
+    if(collider.isAbove(other))
+    {
+        DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
+        DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
+    }
+    else
+    {
+        DrawDecal(collider.GetTopLeft(olc::vf2d(0,0)),trdec);
+        DrawDecal(other.GetTopLeft(olc::vf2d(0,0)),trdec,olc::vf2d(1,1), olc::RED);
+    }
+
+    //other.DebugDraw(*this);
+    //TOP Draw(other.CornerOnScreen(1,0,0), olc::RED);
+    //BOTTOM Draw(other.CornerOnScreen(0,1,1), olc::RED);
+
+    if(other.Overlaps(collider))
+        Draw(0,0,olc::RED);
+    else
+        Draw(0,0,olc::BLACK);
+
+    DrawLine(other.maxH(), 0, other.maxH(), 200, olc::RED);
+    DrawLine(other.minH(), 0, other.minH(), 200, olc::RED);
+    DrawLine(collider.maxH(), 0, collider.maxH(), 200, olc::RED);
+    DrawLine(collider.minH(), 0, collider.minH(), 200, olc::RED);
 
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };

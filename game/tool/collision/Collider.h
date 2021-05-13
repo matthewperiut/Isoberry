@@ -10,6 +10,7 @@ class Collider
 {
 private:
     v3* position = nullptr;
+    olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
 public:
     Collider(v3 size, v3& position);
@@ -29,7 +30,7 @@ private:
              {{0,0,1},{1,0,1}}, //001 101
              {{0,0,1},{0,1,1}}, //001 011
              {{0,1,0},{0,1,1}}};//010 011
-
+public:
     float minX();
     float minY();
     float minZ();
@@ -48,4 +49,12 @@ public:
     olc::vf2d CornerOnScreen(bool mx, bool my, bool mz, olc::vf2d *offset = nullptr);
 
     void DebugDraw(olc::PixelGameEngine &game, olc::vf2d offset = olc::vf2d(0,0));
+
+    bool isAbove(Collider &box);
+
+    bool Overlaps(Collider &box);
+
+    float max2DY();
+
+    float min2DY();
 };
