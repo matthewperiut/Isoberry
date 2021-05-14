@@ -9,7 +9,7 @@
 
 // https://shaunlebron.github.io/IsometricBlocks/
 
-#include "../collision/Collider.h"
+#include "../../objects/collision/Collider.h"
 #include <vector>
 
 class DrawOrderSystem

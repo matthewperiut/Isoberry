@@ -10,7 +10,7 @@ if(${CMAKE_SYSTEM} MATCHES "Linux")
 endif(${CMAKE_SYSTEM} MATCHES "Linux")
 
 file (GLOB MY_SRC
-        "header/olcPixelGameEngine.h"
+        "header/*.h"
         "main.cpp"
         "utility/*.cpp"
         "utility/*.h"
@@ -21,18 +21,20 @@ file (GLOB MY_SRC
         "game/objects/*.h"
         "game/tool/*.cpp"
         "game/tool/*.h"
+        "game/objects/collision/*.cpp"
+        "game/objects/collision/*.h"
         "game/tool/sprite_saving/*.cpp"
         "game/tool/sprite_saving/*.h"
         "game/tool/draw_sprites/*.cpp"
         "game/tool/draw_sprites/*.h"
-        "game/tool/collision/*.cpp"
-        "game/tool/collision/*.h"
         "game/tool/layering/*.cpp"
         "game/tool/layering/*.h"
         "game/tool/input/*.cpp"
         "game/tool/input/*.h"
         "game/tool/art/*.cpp"
         "game/tool/art/*.h"
+        "game/level/*.cpp"
+        "game/level/*.h"
         "game/*.cpp"
         "game/*.h")
 
@@ -48,7 +50,7 @@ if (APPLE)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
 
-    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns header/stb_image.h)
+    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns)
     set_source_files_properties(${myApp_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 

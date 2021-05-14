@@ -8,32 +8,22 @@
 #include "../utility/AssetPath.h"
 #include "tool/input/Options.h"
 
+Level l;
+
 Game::Game() {
     sAppName = "Isoberry";
 }
 
+v3 pos{ 0, 0, 0 };
+
 bool Game::OnUserCreate()
 {
     Clear(olc::Pixel(52, 92, 72));
-    int sizeX = 10;
-    int sizeY = 10;
-    position.reserve(sizeX * sizeY);
-    colliders.reserve(sizeX * sizeY);
+    l.LoadFromFile(GetAssetPath() + "levels/basis.txt");
+    l.game = this;
 
-    for(int i = 0; i < sizeX; i++)
-    {
-        for(int j = 0; j < sizeY; j++)
-        {
-            position[i*sizeX+j] = v3(i*10-50,0,j*10-50);
-            colliders[i*sizeX+j] = Collider(v3(10,10,10),position[i*sizeX+j]);
-            dos.InsertObject(colliders[i*sizeX+j]);
-        }
-
-    }
-    Collider temp = Collider(v3(10,10,10),position[0]);
-    std::cout << GetAssetPath()+"10x10test_box.png" << std::endl;
-    boxSpr = new olc::Sprite(GetAssetPath()+"10x10test_box.png");
-    boxDec = new olc::Decal(boxSpr);
+    //Collider c = Collider(v3(40,50,30),pos);
+    //c.DebugDraw(*this);
 
     return true;
 }
@@ -45,18 +35,9 @@ bool Game::OnUserUpdate(float fElapsedTime)
     VSyncToggle(*this, fElapsedTime, olc::Key::F2);
     FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
 
-    // Sorting System DOS
-    dos.SortObjects();
-    std::vector<Collider*>* colliders = dos.GetObjects();
-    for(int i = 0; i < colliders->size(); i++)
-    {
-        int color = (255/colliders->size())*i;
-        Collider &current = *((*colliders)[i]);
-        DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), boxDec, olc::vf2d(1,1), olc::Pixel(color,color,color));
-        //current.DebugDraw(*this);
-    }
+    l.DrawAll();
 
-    /*
+    /* for player later
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
     GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
@@ -70,15 +51,12 @@ bool Game::OnUserUpdate(float fElapsedTime)
         velocity.x *= 0.7;
         velocity.z *= 0.7;
     }
-    position += velocity * movement;
-    */
-
+    position[0] += velocity * movement;
+*/
     return true;
 }
 
 bool Game::OnUserDestroy()
 {
-    delete boxSpr;
-    delete boxDec;
     return true;
 }

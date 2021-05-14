@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../v3.h"
+#include "../../tool/v3.h"
 
 class Collider
 {
@@ -13,7 +13,7 @@ private:
     olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
 public:
-    short priority = 0;
+    olc::Decal* dec;
 public:
     Collider(v3 size, v3& position);
     bool isColliding(Collider& c);
