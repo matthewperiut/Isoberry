@@ -24,7 +24,7 @@ bool Game::OnUserCreate()
     {
         for(int j = 0; j < sizeY; j++)
         {
-            position[i*sizeX+j] = v3(i*11-50,0,j*11-50);
+            position[i*sizeX+j] = v3(i*10-50,0,j*10-50);
             colliders[i*sizeX+j] = Collider(v3(10,10,10),position[i*sizeX+j]);
             dos.InsertObject(colliders[i*sizeX+j]);
         }

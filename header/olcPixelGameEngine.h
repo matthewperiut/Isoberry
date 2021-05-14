@@ -389,7 +389,9 @@ namespace X11
 		#include <GL/freeglut_ext.h>
 	#endif
 	#if defined(__APPLE__)
-		#include <GLUT/glut.h>
+	    #include <GLUT/glut.h>
+        #include <objc/message.h>
+        #include <objc/NSObjCRuntime.h>
 	#endif
 #endif
 
@@ -4136,7 +4138,46 @@ namespace olc {
 			exit(0);
 		}
 
+#if defined(__APPLE__)
+         static void scrollWheelUpdate(id selff, SEL _sel, id theEvent) {
+             static const SEL deltaYSel = sel_registerName("deltaY");
+
+             double deltaY = ((double (*)(id, SEL))objc_msgSend_fpret)(theEvent, deltaYSel);
+
+             for(int i = 0; i < abs(deltaY); i++) {
+                 if (deltaY > 0) {
+                     ptrPGE->olc_UpdateMouseWheel(-1);
+                 }
+                 else if (deltaY < 0) {
+                     ptrPGE->olc_UpdateMouseWheel(1);
+                 }
+             }
+
+         }
+ #endif
+
 		static void ThreadFunct() {
+#if defined(__APPLE__)
+             static bool hasEnabledCocoa = false;
+             if (!hasEnabledCocoa) {
+                 // Objective-C Wizardry
+                 Class NSApplicationClass = objc_getClass("NSApplication");
+
+                 // NSApp = [NSApplication sharedApplication]
+                 SEL sharedApplicationSel = sel_registerName("sharedApplication");
+                 id NSApp = ((id (*)(Class, SEL))objc_msgSend)(NSApplicationClass, sharedApplicationSel);
+                 // window = [NSApp mainWindow]
+                 SEL mainWindowSel = sel_registerName("mainWindow");
+                 id window = ((id (*)(id, SEL))objc_msgSend)(NSApp, mainWindowSel);
+
+                 // [window setStyleMask: NSWindowStyleMaskClosable | ~NSWindowStyleMaskResizable]
+                 SEL setStyleMaskSel = sel_registerName("setStyleMask:");
+                 ((void (*)(id, SEL, NSUInteger))objc_msgSend)(window, setStyleMaskSel, 7);
+
+                 hasEnabledCocoa = true;
+             }
+
+ #endif
 			if (!*bActiveRef) {
 				ExitMainLoop();
 				return;
@@ -4150,6 +4191,13 @@ namespace olc {
 
 		virtual olc::rcode CreateWindowPane(const olc::vi2d& vWindowPos, olc::vi2d& vWindowSize, bool bFullScreen) override
 		{
+#if defined(__APPLE__)
+             Class GLUTViewClass = objc_getClass("GLUTView");
+
+             SEL scrollWheelSel = sel_registerName("scrollWheel:");
+             bool resultAddMethod = class_addMethod(GLUTViewClass, scrollWheelSel, (IMP)scrollWheelUpdate,  "v@:@");
+             assert(resultAddMethod);
+ #endif
 			renderer->PrepareDevice();
 
 
@@ -4159,10 +4207,13 @@ namespace olc {
 				vWindowSize.y = glutGet(GLUT_SCREEN_HEIGHT);
 				glutFullScreen();
 			}
-
-			if (vWindowSize.x > glutGet(GLUT_SCREEN_WIDTH) || vWindowSize.y > glutGet(GLUT_SCREEN_HEIGHT)) {
-				perror("ERROR: The specified window dimensions do not fit on your screen\n");
-				return olc::FAIL;
+			else
+			{
+                 if (vWindowSize.x > glutGet(GLUT_SCREEN_WIDTH) || vWindowSize.y > glutGet(GLUT_SCREEN_HEIGHT)) {
+                     perror("ERROR: The specified window dimensions do not fit on your screen\n");
+                     return olc::FAIL;
+                 }
+			    glutReshapeWindow(vWindowSize.x, vWindowSize.y);
 			}
 
 			// Create Keyboard Mapping

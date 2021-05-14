@@ -42,7 +42,7 @@ if (WIN32 OR LINUX)
 endif (WIN32 OR LINUX)
 
 if (APPLE)
-    add_compile_options(-stdlib=libc++)
+    add_compile_options(-stdlib=libc++ -framework Carbon)
 
     set(CUR_TARGET Isoberry)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
