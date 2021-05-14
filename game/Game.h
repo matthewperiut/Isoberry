@@ -18,6 +18,14 @@ public:
 public:
     ResolutionDialogue res;
 
+    v3 shadowPosition;
+    Collider* shadow;
+    Img* shadowImg;
+
+    v3 position{ -10, 0, -10 };
+    Collider* collider;
+    Img* img;
+
     bool OnUserCreate() override;
     bool OnUserUpdate(float fElapsedTime) override;
     bool OnUserDestroy() override;

@@ -2,13 +2,11 @@
 // Created by matthewperiut on 5/7/21.
 //
 
-#ifndef ISOBERRY_PLAYER_H
-#define ISOBERRY_PLAYER_H
+#pragma once
 
+#include "../tool/v3.h"
 
-class Player {
-
+class Player
+{
+    v3 position;
 };
-
-
-#endif //ISOBERRY_PLAYER_H

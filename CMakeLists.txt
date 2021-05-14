@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 project(Isoberry)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(ISOBERRY_VERSION 0.1)
 
 if(${CMAKE_SYSTEM} MATCHES "Linux")

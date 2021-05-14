@@ -31,11 +31,25 @@ void Level::LoadFromFile(std::string path)
             Collider& c = colliders[numberImported];
             c = Collider(s, p);
 
+            int imgIndex = numberImported;
+            bool found = false;
             std::string imgPath;
             file >> imgPath;
-            images[numberImported] = new Img(GetAssetPath() + imgPath);
+            for(int i = 0; i < numberImported; i++)
+            {
+                if(*(imgpaths[i]) == imgPath)
+                {
+                    imgIndex = i;
+                    found = true;
+                }
+            }
+            if(!found)
+            {
+                images[numberImported] = new Img(GetAssetPath() + imgPath);
+                imgpaths.push_back(&(images[numberImported]->filePath));
+            }
 
-            c.dec = images[numberImported]->GetDecPtr();
+            c.dec = images[imgIndex]->GetDecPtr();
             DOS.InsertObject(c);
 
             numberImported++;
@@ -47,7 +61,7 @@ void Level::DrawAll()
 {
     DOS.SortObjects();
     std::vector<Collider*>* colliders = DOS.GetObjects();
-    for(int i = 0; i < numberImported; i++)
+    for(int i = 0; i < colliders->size(); i++)
     {
         Collider &current = *((*colliders)[i]);
         game->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);

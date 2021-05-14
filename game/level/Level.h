@@ -17,8 +17,10 @@ private:
     int numberImported{ 0 };
 
     std::vector<Img*> images;
+    std::vector<std::string*> imgpaths;
     std::vector<v3> positions;
     std::vector<Collider> colliders;
+public:
     DrawOrderSystem DOS;
 public:
     Level();
