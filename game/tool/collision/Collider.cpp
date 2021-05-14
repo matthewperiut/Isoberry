@@ -177,5 +177,5 @@ bool Collider::isAbove(Collider &a, Collider &b)
     if (a.minZ() >= b.maxZ()) { return false; }
     else if (b.minZ() >= a.maxZ()) { return true; }
 
-    return false;
+    return true;
 }

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 project(Isoberry)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(ISOBERRY_VERSION 0.1)
 
 if(${CMAKE_SYSTEM} MATCHES "Linux")
@@ -42,6 +42,8 @@ if (WIN32 OR LINUX)
 endif (WIN32 OR LINUX)
 
 if (APPLE)
+    add_compile_options(-stdlib=libc++)
+
     set(CUR_TARGET Isoberry)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
