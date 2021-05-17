@@ -8,16 +8,9 @@
 #include "../utility/AssetPath.h"
 #include "tool/input/Options.h"
 
-Level l;
-
 Game::Game() {
     sAppName = "Isoberry";
 }
-
-//v3 position{ 0, 0, 0 };
-//Collider collider(v3(10,10,10),position);
-//Img img(GetAssetPath() + "10x10test_box.png");
-
 
 bool Game::OnUserCreate()
 {
@@ -32,7 +25,6 @@ bool Game::OnUserCreate()
 
     collider = new Collider(v3(10,10,10),position);
     img = new Img(GetAssetPath() + "10x10test_box.png");
-    //c.DebugDraw(*this);
     collider->dec = img->GetDecPtr();
     l.DOS.InsertObject(*collider);
 

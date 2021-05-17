@@ -3,32 +3,29 @@
 #include <memory>
 #include <string>
 
-using namespace olc;
-using namespace std;
-
 class Img
 {
 public:
-    string filePath;
+    std::string filePath;
 
 private:
-    unique_ptr<Sprite> spr;
-    unique_ptr<Decal> dec;
+    std::unique_ptr<olc::Sprite> spr;
+    std::unique_ptr<olc::Decal> dec;
 
 public:
-    vi2d position{ 0, 0 };
+    olc::vi2d position{ 0, 0 };
 
 public:
-    void SetFilePath(string path);
-    void SetImgSize(vi2d size);
+    void SetFilePath(std::string path);
+    void SetImgSize(olc::vi2d size);
 
     Img();
-    Img(vi2d size);
-    Img(string path);
-    Img(string path, vi2d pos);
+    Img(olc::vi2d size);
+    Img(std::string path);
+    Img(std::string path, olc::vi2d pos);
     Img(const Img &img);
 
-    Sprite* GetSprPtr();
-    Decal* GetDecPtr();
-    string GetFilePath();
+    olc::Sprite* GetSprPtr();
+    olc::Decal* GetDecPtr();
+    std::string GetFilePath();
 };

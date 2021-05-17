@@ -17,12 +17,13 @@ public:
     Game();
 public:
     ResolutionDialogue res;
+    Level l;
 
     v3 shadowPosition;
     Collider* shadow;
     Img* shadowImg;
 
-    v3 position{ -10, 0, -10 };
+    v3 position{ -12, 1, -12 };
     Collider* collider;
     Img* img;
 

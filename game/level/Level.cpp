@@ -8,7 +8,7 @@
 void Level::LoadFromFile(std::string path)
 {
     std::ifstream file(path);
-    string out;
+    std::string out;
     while(file >> out)
     {
         if(out == "RESERVE")

@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include <vector>
+#include <string>
 #include "../tool/layering/DrawOrderSystem.h"
 #include "../tool/Img.h"
-#include "../Game.h"
 
 class Level
 {
