@@ -12,7 +12,7 @@
 class Level
 {
 public:
-    olc::PixelGameEngine* game;
+    olc::PixelGameEngine* engine;
 private:
     int numberReserved{ 0 };
     int numberImported{ 0 };
@@ -25,6 +25,8 @@ public:
     DrawOrderSystem DOS;
 public:
     Level();
+    Level(olc::PixelGameEngine& g) : engine( &g )
+    { DOS = DrawOrderSystem(g); }
     void LoadFromFile(std::string path);
     ~Level();
 

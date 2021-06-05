@@ -64,7 +64,7 @@ void Level::DrawAll()
     for(int i = 0; i < colliders->size(); i++)
     {
         Collider &current = *((*colliders)[i]);
-        game->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);
+        engine->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);
     }
 }
 

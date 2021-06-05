@@ -16,8 +16,14 @@ class DrawOrderSystem
 {
 private:
     std::vector<Collider*> objects;
-
+    olc::PixelGameEngine* engine = nullptr;
 public:
+
+    DrawOrderSystem()
+    = default;
+    explicit DrawOrderSystem(olc::PixelGameEngine& g) : engine( &g )
+    {}
+
     void InsertObject(Collider &c);
     void SortObjects();
 

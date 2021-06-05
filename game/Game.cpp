@@ -15,8 +15,8 @@ Game::Game() {
 bool Game::OnUserCreate()
 {
     Clear(olc::Pixel(52, 92, 72));
+    l = Level(*this);
     l.LoadFromFile(GetAssetPath() + "levels/basis.txt");
-    l.game = this;
 
     shadow = new Collider(v3(10,1,10), shadowPosition);
     shadowImg = new Img(GetAssetPath() + "shadow.png");
