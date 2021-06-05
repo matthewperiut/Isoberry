@@ -40,7 +40,7 @@ olc::vf2d Collider::Get2dSize()
 olc::Sprite* Collider::CreateSpriteDebugDraw(olc::Pixel outlineColor)
 {
     olc::vf2d sprSize = Get2dSize();
-    olc::Sprite* colliderSprite = new olc::Sprite(sprSize.x+1, sprSize.y+1);
+    auto* colliderSprite = new olc::Sprite(sprSize.x+1, sprSize.y+1);
     for(int i = 0; i < colliderSprite->width; i++)
     {
         for(int j = 0; j < colliderSprite->height; j++)

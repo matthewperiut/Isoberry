@@ -28,4 +28,6 @@ public:
     void SortObjects();
 
     std::vector<Collider*>* GetObjects() { return &objects; }
+
+    void DrawAll();
 };

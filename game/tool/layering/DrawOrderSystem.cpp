@@ -19,3 +19,14 @@ void DrawOrderSystem::SortObjects()
 
     std::sort(objects.begin(), objects.end(), sortRuleLambda);
 }
+
+void DrawOrderSystem::DrawAll()
+{
+    SortObjects();
+    std::vector<Collider*>* colliders = GetObjects();
+    for(int i = 0; i < colliders->size(); i++)
+    {
+        Collider &current = *((*colliders)[i]);
+        engine->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);
+    }
+}

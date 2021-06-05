@@ -59,13 +59,7 @@ void Level::LoadFromFile(std::string path)
 
 void Level::DrawAll()
 {
-    DOS.SortObjects();
-    std::vector<Collider*>* colliders = DOS.GetObjects();
-    for(int i = 0; i < colliders->size(); i++)
-    {
-        Collider &current = *((*colliders)[i]);
-        engine->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);
-    }
+    DOS.DrawAll();
 }
 
 Level::~Level()
