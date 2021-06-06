@@ -8,7 +8,7 @@
 
 class Collider
 {
-private:
+protected:
     v3* position = nullptr;
     olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
@@ -45,6 +45,8 @@ public:
     float min2DY();
 
 public:
+    void SetNewPosPointer(v3& newPos);
+
     olc::vf2d Get2dSize();
     olc::vf2d GetTopLeft(olc::vf2d offset);
     olc::vi2d CornerOnScreenNormalized(bool mx, bool my, bool mz);

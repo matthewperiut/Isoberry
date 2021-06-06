@@ -14,6 +14,11 @@ Collider::Collider(v3 size, v3 &position)
     Get2dSize();
 }
 
+void Collider::SetNewPosPointer(v3 &newPos)
+{
+    this->position = &newPos;
+}
+
 bool Collider::isColliding(Collider &c)
 {
     Collider& a = c;
