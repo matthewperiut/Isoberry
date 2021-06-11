@@ -6,7 +6,7 @@
 
 #include "tool/Img.h"
 #include "../header/olcPixelGameEngine.h"
-#include "objects/Collision/Collider.h"
+#include "objects/collision/Collider.h"
 #include "tool/input/ResolutionDialogue.h"
 #include "tool/layering/DrawOrderSystem.h"
 #include "level/Level.h"
