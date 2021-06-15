@@ -30,4 +30,6 @@ public:
     std::vector<Collider*>* GetObjects() { return &objects; }
 
     void DrawAll();
+
+    bool IsColliding(Collider &participant);
 };

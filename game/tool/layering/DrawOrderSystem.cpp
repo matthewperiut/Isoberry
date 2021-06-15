@@ -5,6 +5,19 @@
 #include "DrawOrderSystem.h"
 #include <algorithm>
 
+bool DrawOrderSystem::IsColliding(Collider& participant)
+{
+    std::vector<Collider*>* colliders = GetObjects();
+    for(auto & col : *colliders)
+    {
+        if (col == &participant)
+            continue;
+        if(participant.isColliding(*col))
+            return true;
+    }
+    return false;
+}
+
 void DrawOrderSystem::InsertObject(Collider& c)
 {
     objects.push_back(&c);

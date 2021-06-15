@@ -4,14 +4,16 @@
 
 #include "Object.h"
 
-bool Object::CollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
+bool Object::NotCollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
     for(auto & col : *cols)
     {
+        if (col == (Collider*) this)
+            continue;
         Collider& current = *col;
         if(current.isColliding(c))
-            return true;
+            return false;
     }
-    return false;
+    return true;
 }
 
 void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
@@ -61,8 +63,8 @@ void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
     }
     else
     {
-        directions[YPos] = 0;
-        directions[YNeg] = 0;
+        directions[YPos] = false;
+        directions[YNeg] = false;
     }
 }
 
@@ -71,16 +73,16 @@ void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
 
 bool Object::MoveXPos(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.x += velocity.x * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).x = pos.x;
+        position.x = pos.x;
     }
 
     return any;
@@ -88,16 +90,16 @@ bool Object::MoveXPos(std::vector<Collider *> *cols)
 
 bool Object::MoveXNeg(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.x += velocity.x * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).x = pos.x;
+        (position).x = pos.x;
     }
 
     return any;
@@ -105,16 +107,16 @@ bool Object::MoveXNeg(std::vector<Collider *> *cols)
 
 bool Object::MoveZPos(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.z += velocity.z * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).z = pos.z;
+        (position).z = pos.z;
     }
 
     return any;
@@ -122,16 +124,16 @@ bool Object::MoveZPos(std::vector<Collider *> *cols)
 
 bool Object::MoveZNeg(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.z += velocity.z * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).z = pos.z;
+        (position).z = pos.z;
     }
 
     return any;
@@ -139,16 +141,16 @@ bool Object::MoveZNeg(std::vector<Collider *> *cols)
 
 bool Object::MoveYPos(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.y += velocity.y * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).y = pos.y;
+        (position).y = pos.y;
     }
 
     return any;
@@ -156,16 +158,16 @@ bool Object::MoveYPos(std::vector<Collider *> *cols)
 
 bool Object::MoveYNeg(std::vector<Collider *> *cols)
 {
-    v3 pos = *position;
+    v3 pos = position;
     Collider temp = *this;
     temp.SetNewPosPointer(pos);
     pos.y += velocity.y * fElapsedTime;
 
-    bool any = CollidingWithAny(temp, cols);
+    bool any = NotCollidingWithAny(temp, cols);
 
     if(any)
     {
-        (*position).y = pos.y;
+        (position).y = pos.y;
     }
 
     return any;
@@ -178,7 +180,7 @@ bool Object::CollisionAbove()
 
 bool Object::CollisionBelow()
 {
-    return directions[XPos];
+    return directions[YNeg];
 }
 
 void Object::setDecal(olc::Decal *decal)

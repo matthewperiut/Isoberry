@@ -9,7 +9,7 @@
 class Collider
 {
 protected:
-    v3* position = nullptr;
+    v3* positionPtr = nullptr;
     olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
 public:

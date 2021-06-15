@@ -7,6 +7,9 @@
 #include "Game.h"
 #include "../utility/AssetPath.h"
 #include "tool/input/Options.h"
+#include "objects/Object.h"
+
+Object test(v3(10,10,10), v3(-20,1,-20));
 
 Game::Game() {
     sAppName = "Isoberry";
@@ -14,6 +17,7 @@ Game::Game() {
 
 bool Game::OnUserCreate()
 {
+
     Clear(olc::Pixel(52, 92, 72));
     l = Level(*this);
     l.LoadFromFile(GetAssetPath() + "levels/basis.txt");
@@ -22,18 +26,21 @@ bool Game::OnUserCreate()
     shadowImg = new Img(GetAssetPath() + "shadow.png");
     shadow->dec = shadowImg->GetDecPtr();
     l.DOS.InsertObject(*shadow);
-
-    collider = new Collider(v3(10,10,10),position);
+    /*
+       collider = new Collider(v3(10,10,10),position);
+       img = new Img(GetAssetPath() + "10x10test_box.png");
+       collider->dec = img->GetDecPtr();
+       l.DOS.InsertObject(*collider);
+   */
     img = new Img(GetAssetPath() + "10x10test_box.png");
-    collider->dec = img->GetDecPtr();
-    l.DOS.InsertObject(*collider);
-
+    test.setDecal(img->GetDecPtr());
+    l.DOS.InsertObject(test);
     return true;
 }
 
 bool Game::OnUserUpdate(float fElapsedTime)
 {
-
+/*
     res.handle(*this);
     VSyncToggle(*this, fElapsedTime, olc::Key::F2);
     FullScreenToggle(*this, fElapsedTime, olc::Key::F3);
@@ -61,20 +68,20 @@ bool Game::OnUserUpdate(float fElapsedTime)
     //shadowPosition.y+=1;
 */
 
-    shadowPosition = v3(position.x, -1, position.z);
+    shadowPosition = v3(test.position.x, -1, test.position.z);
 
+    //testing
+    while(l.DOS.IsColliding(*shadow))
+    {
+        shadowPosition.y += 1;
+    }
+/*
     l.DrawAll();
 
     //for player later
     v3 old = position;
     float movement = fElapsedTime * 20;
     v3 velocity{ 0, 0, 0 };
-    GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
-    GetKey(olc::Key::A).bHeld ? velocity.x = -1 : 0;
-    GetKey(olc::Key::S).bHeld ? velocity.z = -1 : 0;
-    GetKey(olc::Key::D).bHeld ? velocity.x =  1 : 0;
-    GetKey(olc::Key::UP).bHeld ? velocity.y =  1 : 0;
-    GetKey(olc::Key::DOWN).bHeld ? velocity.y =  -1 : 0;
     if(velocity.x && velocity.z)
     {
         velocity.x *= 0.7;
@@ -88,22 +95,39 @@ bool Game::OnUserUpdate(float fElapsedTime)
         Collider* temp = (colliders->at(j));
         if(collider->isColliding(*temp))
         {
-            if(collider->maxH() != temp->maxH())
+            if(collider != temp)
             {
                 position = old;
             }
 
         }
     }
-
+*/
+    v3& velocity = test.velocity;
+    velocity = {0,0,0};
+    GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
+    GetKey(olc::Key::A).bHeld ? velocity.x = -1 : 0;
+    GetKey(olc::Key::S).bHeld ? velocity.z = -1 : 0;
+    GetKey(olc::Key::D).bHeld ? velocity.x =  1 : 0;
+    GetKey(olc::Key::UP).bHeld ? velocity.y =  1 : 0;
+    GetKey(olc::Key::DOWN).bHeld ? velocity.y =  -1 : 0;
+    velocity *= 30;
+    test.Move(fElapsedTime, l.DOS);
+    l.DOS.DrawAll();
     return true;
+}
+
+void SafeDelete(void* anything)
+{
+    if (anything != nullptr)
+        delete anything;
 }
 
 bool Game::OnUserDestroy()
 {
-    delete shadowImg;
-    delete shadow;
-    delete img;
-    delete collider;
+    SafeDelete(shadowImg);
+    SafeDelete(shadow);
+    SafeDelete(img);
+    SafeDelete(collider);
     return true;
 }

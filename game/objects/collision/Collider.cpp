@@ -9,14 +9,14 @@
 
 Collider::Collider(v3 size, v3 &position)
 {
-    this->position = &position;
+    this->positionPtr = &position;
     this->size = size;
     Get2dSize();
 }
 
 void Collider::SetNewPosPointer(v3 &newPos)
 {
-    this->position = &newPos;
+    this->positionPtr = &newPos;
 }
 
 bool Collider::isColliding(Collider &c)
@@ -100,40 +100,40 @@ olc::vf2d Collider::GetTopLeft(olc::vf2d offset)
 // For the purpose of drawing into a sprite
 olc::vi2d Collider::CornerOnScreenNormalized(bool mx, bool my, bool mz)
 {
-    v3 holder = *position;
-    position->x = 0;
-    position->y = 0;
-    position->z = 0;
+    v3 holder = *positionPtr;
+    positionPtr->x = 0;
+    positionPtr->y = 0;
+    positionPtr->z = 0;
     v3 mpos = v3(mx ? minX() : maxX(), my ? minY() : maxY(), mz ? minZ() : maxZ());
-    position->x = holder.x;
-    position->y = holder.y;
-    position->z = holder.z;
+    positionPtr->x = holder.x;
+    positionPtr->y = holder.y;
+    positionPtr->z = holder.z;
     return mpos.toScreenNoCentering();
 }
 
 float Collider::minX()
 {
-    return position->x;
+    return positionPtr->x;
 }
 float Collider::minY()
 {
-    return position->y;
+    return positionPtr->y;
 }
 float Collider::minZ()
 {
-    return position->z;
+    return positionPtr->z;
 }
 float Collider::maxX()
 {
-    return position->x + size.x;
+    return positionPtr->x + size.x;
 }
 float Collider::maxY()
 {
-    return position->y + size.y;
+    return positionPtr->y + size.y;
 }
 float Collider::maxZ()
 {
-    return position->z + size.z;
+    return positionPtr->z + size.z;
 }
 
 float Collider::min2DY() {

@@ -8,16 +8,28 @@
 #include "collision/Collider.h"
 #include "../tool/layering/DrawOrderSystem.h"
 
-class Object : protected Collider
+class Object : public Collider
 {
 public:
+    v3 position{ 0, 0, 0 };
     v3 velocity;
 private:
-    float fElapsedTime;
+    float fElapsedTime{};
     enum { XPos, XNeg, ZPos, ZNeg, YPos, YNeg };
     bool directions[6]{ false };
+
+public:
+    Object(const v3& size, const v3& position) : Collider(size, this->position)
+    {
+        this->position = position;
+    }
+    explicit Object(const v3& size) : Object(size, this->position)
+    {
+
+    }
+
 private:
-    static bool CollidingWithAny(Collider& c, std::vector<Collider*>* cols);
+    bool NotCollidingWithAny(Collider& c, std::vector<Collider*>* cols);
 
     bool MoveXPos(std::vector<Collider*>* cols);
     bool MoveXNeg(std::vector<Collider*>* cols);
