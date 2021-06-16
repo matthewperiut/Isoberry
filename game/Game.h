@@ -10,6 +10,7 @@
 #include "tool/input/ResolutionDialogue.h"
 #include "tool/layering/DrawOrderSystem.h"
 #include "level/Level.h"
+#include "objects/Object.h"
 
 class Game : public olc::PixelGameEngine
 {
@@ -23,8 +24,7 @@ public:
     Collider* shadow;
     Img* shadowImg;
 
-    v3 position{ -12, 1, -12 };
-    Collider* collider;
+    Object test = Object(v3(10,10,10), v3(-20,1,-20));
     Img* img;
 
     bool OnUserCreate() override;
