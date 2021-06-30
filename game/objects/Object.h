@@ -11,8 +11,17 @@
 class Object : public Collider
 {
 public:
+    // vars to do with type of Object
+    bool isPlayer = false;
+    bool isEntity = false;
+    bool isPushable = false;
+    float pushModifier = 0;
+
+    bool hasGravity = true;
+    float gravity = -9.8f;
+public:
     v3 position{ 0, 0, 0 };
-    v3 velocity;
+    v3 velocity{ 0, 0, 0 };
 private:
     float fElapsedTime{};
     enum { XPos, XNeg, ZPos, ZNeg, YPos, YNeg };
@@ -37,6 +46,8 @@ private:
     bool MoveZNeg(std::vector<Collider*>* cols);
     bool MoveYPos(std::vector<Collider*>* cols);
     bool MoveYNeg(std::vector<Collider*>* cols);
+
+    void ApplyGravity();
 public:
     bool CollisionAbove();
     bool CollisionBelow();

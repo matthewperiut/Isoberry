@@ -11,6 +11,7 @@
 #include "tool/layering/DrawOrderSystem.h"
 #include "level/Level.h"
 #include "objects/Object.h"
+#include "objects/Player.h"
 
 class Game : public olc::PixelGameEngine
 {
@@ -24,7 +25,7 @@ public:
     Collider* shadow;
     Img* shadowImg;
 
-    Object test = Object(v3(10,10,10), v3(-20,1,-20));
+    Player test = Player(v3(10,10,10), v3(-20,1,-20));
     Img* img;
 
     bool OnUserCreate() override;

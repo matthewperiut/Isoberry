@@ -66,6 +66,8 @@ void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
         directions[YPos] = false;
         directions[YNeg] = false;
     }
+
+    ApplyGravity();
 }
 
 // The reason for separating pos and neg even though seemingly
@@ -186,4 +188,18 @@ bool Object::CollisionBelow()
 void Object::setDecal(olc::Decal *decal)
 {
     dec = decal;
+}
+
+void Object::ApplyGravity() {
+    if(hasGravity)
+    {
+        if(velocity.y > gravity*10)
+        {
+            velocity.y -= this->fElapsedTime*abs(gravity)*10;
+        }
+        else if (velocity.y < gravity*10)
+        {
+            velocity.y = gravity*10;
+        }
+    }
 }

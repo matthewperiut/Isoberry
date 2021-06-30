@@ -33,7 +33,8 @@ bool Game::OnUserCreate()
 
 bool Game::OnUserUpdate(float fElapsedTime)
 {
-
+    test.KeyboardInput(*this);
+    test.Move(fElapsedTime, l.DOS);
     shadowPosition = v3(test.position.x, -1, test.position.z);
 
     //testing shadows
@@ -49,21 +50,7 @@ bool Game::OnUserUpdate(float fElapsedTime)
     shadowPosition.y = floor(shadowPosition.y);
 
     //testing player
-    v3& velocity = test.velocity;
-    velocity = {0,0,0};
-    GetKey(olc::Key::W).bHeld ? velocity.z =  1 : 0;
-    GetKey(olc::Key::A).bHeld ? velocity.x = -1 : 0;
-    GetKey(olc::Key::S).bHeld ? velocity.z = -1 : 0;
-    GetKey(olc::Key::D).bHeld ? velocity.x =  1 : 0;
-    GetKey(olc::Key::UP).bHeld ? velocity.y =  1 : 0;
-    GetKey(olc::Key::DOWN).bHeld ? velocity.y =  -1 : 0;
-    if(velocity.x && velocity.z)
-    {
-        velocity.x *= 0.7;
-        velocity.z *= 0.7;
-    }
-    velocity *= 30;
-    test.Move(fElapsedTime, l.DOS);
+
     l.DOS.DrawAll();
     return true;
 }
