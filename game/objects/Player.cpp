@@ -4,7 +4,8 @@
 
 #include "Player.h"
 
-void Player::KeyboardInput(olc::PixelGameEngine& g) {
+void Player::KeyboardInput(olc::PixelGameEngine& g)
+{
     velocity.x = 0;
     velocity.z = 0;
 
@@ -17,7 +18,27 @@ void Player::KeyboardInput(olc::PixelGameEngine& g) {
         velocity.x *= 0.7;
         velocity.z *= 0.7;
     }
+    if(CollisionBelow())
+    {
+        // using bHeld bc CollisionBelow isn't reliable (yet)
+        g.GetKey(olc::Key::SPACE).bHeld ? velocity.y = 85 : 0;
+        jump = true;
+    }
+    if(g.GetKey(olc::Key::SPACE).bReleased)
+    {
+        if(jump)
+        {
+            if (velocity.y > 0)
+                velocity.y = velocity.y*0.5;
+            jump = false;
+        }
+    }
+}
 
-    g.GetKey(olc::Key::SPACE).bPressed ? velocity.y = 70 : 0;
-    g.GetKey(olc::Key::SPACE).bReleased ? velocity.y = velocity.y*0.7 : velocity.y;
+void Player::Move(float fElapsedTime, DrawOrderSystem &dos)
+{
+    Object::Move(fElapsedTime, dos);
+
+    if(CollisionBelow())
+        velocity.y = 0;
 }

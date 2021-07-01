@@ -87,7 +87,7 @@ bool Object::MoveXPos(std::vector<Collider *> *cols)
         position.x = pos.x;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::MoveXNeg(std::vector<Collider *> *cols)
@@ -104,7 +104,7 @@ bool Object::MoveXNeg(std::vector<Collider *> *cols)
         (position).x = pos.x;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::MoveZPos(std::vector<Collider *> *cols)
@@ -121,7 +121,7 @@ bool Object::MoveZPos(std::vector<Collider *> *cols)
         (position).z = pos.z;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::MoveZNeg(std::vector<Collider *> *cols)
@@ -138,7 +138,7 @@ bool Object::MoveZNeg(std::vector<Collider *> *cols)
         (position).z = pos.z;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::MoveYPos(std::vector<Collider *> *cols)
@@ -155,7 +155,7 @@ bool Object::MoveYPos(std::vector<Collider *> *cols)
         (position).y = pos.y;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::MoveYNeg(std::vector<Collider *> *cols)
@@ -172,7 +172,7 @@ bool Object::MoveYNeg(std::vector<Collider *> *cols)
         (position).y = pos.y;
     }
 
-    return any;
+    return !any;
 }
 
 bool Object::CollisionAbove()

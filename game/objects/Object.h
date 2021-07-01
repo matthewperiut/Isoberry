@@ -18,7 +18,7 @@ public:
     float pushModifier = 0;
 
     bool hasGravity = true;
-    float gravity = -9.8f;
+    float gravity = -14.f;
 public:
     v3 position{ 0, 0, 0 };
     v3 velocity{ 0, 0, 0 };

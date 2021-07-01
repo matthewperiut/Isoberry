@@ -9,6 +9,8 @@
 
 class Player : public Object
 {
+private:
+    bool jump = false;
 public:
     Player(const v3& size) : Object(size)
     {
@@ -21,4 +23,5 @@ public:
         isEntity = true;
     }
     void KeyboardInput(olc::PixelGameEngine& g);
+    void Move(float fElapsedTime, DrawOrderSystem& dos);
 };
