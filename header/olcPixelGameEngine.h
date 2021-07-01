@@ -4141,7 +4141,7 @@ namespace olc {
 #if defined(__APPLE__)
          static void scrollWheelUpdate(id selff, SEL _sel, id theEvent) {
              static const SEL deltaYSel = sel_registerName("deltaY");
-
+            /*
              double deltaY = ((double (*)(id, SEL))objc_msgSend_fpret)(theEvent, deltaYSel);
 
              for(int i = 0; i < abs(deltaY); i++) {
@@ -4151,7 +4151,8 @@ namespace olc {
                  else if (deltaY < 0) {
                      ptrPGE->olc_UpdateMouseWheel(1);
                  }
-             }
+             }*/
+
 
          }
  #endif
@@ -4196,6 +4197,10 @@ namespace olc {
 
              SEL scrollWheelSel = sel_registerName("scrollWheel:");
              bool resultAddMethod = class_addMethod(GLUTViewClass, scrollWheelSel, (IMP)scrollWheelUpdate,  "v@:@");
+             assert(resultAddMethod);
+
+             SEL drawRectSel = sel_registerName("drawRect:");
+             resultAddMethod = class_replaceMethod(GLUTViewClass, drawRectSel, (IMP)DrawFunct,  "v@:@");
              assert(resultAddMethod);
  #endif
 			renderer->PrepareDevice();
