@@ -21,11 +21,17 @@ void Player::KeyboardInput(olc::PixelGameEngine& g)
     if(CollisionBelow())
     {
         // using bHeld bc CollisionBelow isn't reliable (yet)
-        g.GetKey(olc::Key::SPACE).bHeld ? velocity.y = 85 : 0;
+        if(g.GetKey(olc::Key::SPACE).bHeld && hasLetGoJump)
+        {
+            velocity.y = 85;
+            hasLetGoJump = false;
+        }
+
         jump = true;
     }
     if(g.GetKey(olc::Key::SPACE).bReleased)
     {
+        hasLetGoJump = true;
         if(jump)
         {
             if (velocity.y > 0)

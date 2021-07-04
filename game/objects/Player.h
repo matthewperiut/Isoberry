@@ -11,6 +11,7 @@ class Player : public Object
 {
 private:
     bool jump = false;
+    bool hasLetGoJump = true;
 public:
     Player(const v3& size) : Object(size)
     {
