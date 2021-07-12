@@ -59,6 +59,17 @@ void Player::Animate(float fElapsedTime)
         return;
     }
 
+    elapsedFrame += fElapsedTime;
+    if(elapsedFrame < thresholdTime)
+        return;
+    elapsedFrame = 0;
+    frame++;
+
+    if(frame == avaliableFramesInX[int(state)])
+    {
+        frame = 0;
+    }
+
     if(velocity.z != 0 && velocity.x == 0)
     {
         if(velocity.z < 0)
@@ -110,17 +121,4 @@ void Player::Animate(float fElapsedTime)
         flip = 1;
         displacement = { 8, 3 };
     }
-
-    elapsedFrame += fElapsedTime;
-    if(elapsedFrame > thresholdTime)
-    {
-        frame++;
-        if(frame == avaliableFramesInX[int(state)])
-        {
-            frame = 0;
-        }
-        elapsedFrame = 0;
-    }
-
-    std::cout << velocity << "   " << rotationState << std::endl;
 }
