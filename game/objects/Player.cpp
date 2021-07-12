@@ -47,4 +47,80 @@ void Player::Move(float fElapsedTime, DrawOrderSystem &dos)
 
     if(CollisionBelow())
         velocity.y = 0;
+
+    Animate(fElapsedTime);
+}
+
+void Player::Animate(float fElapsedTime)
+{
+    if(abs(velocity.x) + abs(velocity.z) == 0)
+    {
+        frame = 1;
+        return;
+    }
+
+    if(velocity.z != 0 && velocity.x == 0)
+    {
+        if(velocity.z < 0)
+            rotationState = 0;
+        if(velocity.z > 0)
+            rotationState = 7; // reverse
+    }
+
+    if(velocity.z == 0 && velocity.x != 0)
+    {
+        if(velocity.x < 0)
+            rotationState = 2;
+        if(velocity.x > 0)
+            rotationState = 5; // reverse
+    }
+
+    if(velocity.z > 0)
+    {
+        if(velocity.x > 0)
+        {
+            rotationState = 6;
+        }
+        if(velocity.x < 0)
+        {
+            rotationState = 3; // reverse
+        }
+    }
+    if(velocity.z < 0)
+    {
+        if(velocity.x > 0)
+        {
+            rotationState = 4;
+        }
+        if(velocity.x < 0)
+        {
+            rotationState = 1;
+        }
+    }
+
+    if (rotationState < 5)
+    {
+        state = rotationState;
+        displacement = { 8, 3 };
+        flip = 0;
+    }
+    else
+    {
+        state = rotationState - 5;
+        flip = 1;
+        displacement = { 8, 3 };
+    }
+
+    elapsedFrame += fElapsedTime;
+    if(elapsedFrame > thresholdTime)
+    {
+        frame++;
+        if(frame == avaliableFramesInX[int(state)])
+        {
+            frame = 0;
+        }
+        elapsedFrame = 0;
+    }
+
+    std::cout << velocity << "   " << rotationState << std::endl;
 }

@@ -13,7 +13,13 @@ protected:
     olc::vf2d size2d{ 0, 0 };
     v3 size{ 1, 1, 1 };
 public:
-    olc::Decal* dec;
+    olc::Decal* dec = nullptr;
+    // if still nullptr use this - default values ideal for player
+    std::vector<olc::Decal*> decalSpriteSheets;
+    olc::vf2d displacement{ 8, 3 };
+    olc::vf2d sectionSize{ 32, 32 };
+    olc::vf2d sectionPos{ 0, 0 };
+    bool flip = false;
 public:
     Collider(v3 size, v3& position);
     bool isColliding(Collider& c);

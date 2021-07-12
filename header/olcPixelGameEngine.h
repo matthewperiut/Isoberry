@@ -74,7 +74,7 @@
 
 	g++ -o YourProgName YourSource.cpp -lX11 -lGL -lpthread -lpng -lstdc++fs -std=c++17
 
-	On some Linux configurations, the frame rate is locked to the refresh
+	On some Linux configurations, the state rate is locked to the refresh
 	rate of the monitor. This engine tries to unlock it but may not be
 	able to, in which case try launching your program like this:
 
@@ -229,7 +229,7 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-		// Called once per frame, draws random coloured pixels
+		// Called once per state, draws random coloured pixels
 		for (int x = 0; x < ScreenWidth(); x++)
 			for (int y = 0; y < ScreenHeight(); y++)
 				Draw(x, y, olc::Pixel(rand() % 256, rand() % 256, rand() % 256));
@@ -545,8 +545,8 @@ namespace olc
     // O------------------------------------------------------------------------------O
     struct HWButton
     {
-        bool bPressed = false;	// Set once during the frame the event occurs
-        bool bReleased = false;	// Set once during the frame the event occurs
+        bool bPressed = false;	// Set once during the state the event occurs
+        bool bReleased = false;	// Set once during the state the event occurs
         bool bHeld = false;		// Set true for all frames between pressed and released events
     };
 
@@ -767,7 +767,7 @@ namespace olc
     public: // User Override Interfaces
         // Called once on application startup, use to load your resources
         virtual bool OnUserCreate();
-        // Called every frame, and provides you with a time per frame value
+        // Called every state, and provides you with a time per state value
         virtual bool OnUserUpdate(float fElapsedTime);
         // Called once on application termination, so you can be one clean coder
         virtual bool OnUserDestroy();
@@ -2829,14 +2829,14 @@ namespace olc
 		std::chrono::duration<float> elapsedTime = m_tp2 - m_tp1;
 		m_tp1 = m_tp2;
 
-		// Our time per frame coefficient
+		// Our time per state coefficient
 		float fElapsedTime = elapsedTime.count();
 		fLastElapsed = fElapsedTime;
 
 		// Some platforms will need to check for events
 		platform->HandleSystemEvent();
 
-		// Compare hardware input states from previous frame
+		// Compare hardware input states from previous state
 		auto ScanHardware = [&](HWButton* pKeys, bool* pStateOld, bool* pStateNew, uint32_t nKeyCount)
 		{
 			for (uint32_t i = 0; i < nKeyCount; i++)
@@ -2863,7 +2863,7 @@ namespace olc
 		ScanHardware(pKeyboardState, pKeyOldState, pKeyNewState, 256);
 		ScanHardware(pMouseState, pMouseOldState, pMouseNewState, nMouseButtons);
 
-		// Cache mouse coordinates so they remain consistent during frame
+		// Cache mouse coordinates so they remain consistent during state
 		vMousePos = vMousePosCache;
 		nMouseWheelDelta = nMouseWheelDeltaCache;
 		nMouseWheelDeltaCache = 0;
@@ -3125,7 +3125,7 @@ namespace olc
 			{
 				printf("NOTE: Could not disable VSYNC, glXSwapIntervalEXT() was not found!\n");
 				printf("      Don't worry though, things will still work, it's just the\n");
-				printf("      frame rate will be capped to your monitors refresh rate - javidx9\n");
+				printf("      state rate will be capped to your monitors refresh rate - javidx9\n");
 			}
 
 			if (glSwapIntervalEXT != nullptr && !bVSYNC)

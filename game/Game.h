@@ -25,7 +25,7 @@ public:
     Collider* shadow;
     Img* shadowImg;
 
-    Player test = Player(v3(10,10,10), v3(-20,1,-20));
+    Player test = Player(v3(8,23,8), v3(-20,1,-20));
     Img* img;
 
     bool OnUserCreate() override;

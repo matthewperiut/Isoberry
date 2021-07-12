@@ -64,7 +64,7 @@ olc::Sprite* Collider::CreateSpriteDebugDraw(olc::Pixel outlineColor)
 
 void Collider::DebugDraw(olc::PixelGameEngine &game, olc::vf2d offset)
 {
-    //This is exclusively to update offset while drawing this frame.
+    //This is exclusively to update offset while drawing this state.
     CornerOnScreen(0,0,0,&offset);
 
     for(int i = 0; i < 12; i++)

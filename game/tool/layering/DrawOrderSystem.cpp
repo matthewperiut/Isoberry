@@ -40,6 +40,18 @@ void DrawOrderSystem::DrawAll()
     for(int i = 0; i < colliders->size(); i++)
     {
         Collider &current = *((*colliders)[i]);
+        if(current.dec == nullptr)
+        {
+            for(int j = 0; j < current.decalSpriteSheets.size(); j++)
+            {
+
+                engine->DrawPartialDecal(current.GetTopLeft(-current.displacement)+(current.flip*olc::vf2d(current.sectionSize.x,0)),
+                                         current.decalSpriteSheets[j],
+                                         current.sectionPos*current.sectionSize, current.sectionSize,
+                                         olc::vf2d(1 - (current.flip*2),1));
+            }
+            continue;
+        }
         engine->DrawDecal(current.GetTopLeft(olc::vf2d(0,0)), current.dec);
     }
 }
