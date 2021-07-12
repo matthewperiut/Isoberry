@@ -17,6 +17,8 @@ private:
     int numberReserved{ 0 };
     int numberImported{ 0 };
 
+    v3 tempPos{0,0,0};
+
     std::vector<Img*> images;
     std::vector<std::string*> imgpaths;
     std::vector<v3> positions;

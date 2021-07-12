@@ -14,9 +14,12 @@ void Level::LoadFromFile(std::string path)
         if(out == "RESERVE")
         {
             file >> numberReserved;
-            images.reserve(numberReserved);
-            positions.reserve(numberReserved);
-            colliders.reserve(numberReserved);
+            for(int i = 0; i < numberReserved; i++)
+            {
+                images.emplace_back();
+                positions.emplace_back();
+                colliders.emplace_back(v3(10,10,10), tempPos);
+            }
         }
         if(out == "BOX")
         {
