@@ -31,7 +31,7 @@ public:
         isPlayer = true;
         isEntity = true;
 
-        spriteSheets.emplace_back(new olc::Sprite(GetAssetPath() + "players/generic-sprite.png"));
+        spriteSheets.emplace_back(new olc::Sprite(GetAssetPath() + "players/generic/generic-sprite.png"));
         decalSpriteSheets.emplace_back(new olc::Decal(spriteSheets[0]));
     }
     Player(const v3& size) : Object(size)
