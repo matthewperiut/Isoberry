@@ -26,6 +26,7 @@ public:
 
     void InsertObject(Collider &c);
     void SortObjects();
+    void RemoveObject(Collider &c);
 
     std::vector<Collider*>* GetObjects() { return &objects; }
 

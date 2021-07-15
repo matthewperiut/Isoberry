@@ -21,12 +21,7 @@ public:
     ResolutionDialogue res;
     Level l;
 
-    v3 shadowPosition;
-    Collider* shadow;
-    Img* shadowImg;
-
-    Player test = Player(v3(8,23,8), v3(-20,1,-20));
-    Img* img;
+    Player test = Player(v3(8,23,8), v3(-20,1,-20), l.DOS);
 
     bool OnUserCreate() override;
     bool OnUserUpdate(float fElapsedTime) override;

@@ -53,6 +53,8 @@ public:
 public:
     void SetNewPosPointer(v3& newPos);
 
+    v3& GetSizeRef();
+    v3& GetPositionRef();
     olc::vf2d Get2dSize();
     olc::vf2d GetTopLeft(olc::vf2d offset);
     olc::vi2d CornerOnScreenNormalized(bool mx, bool my, bool mz);

@@ -23,6 +23,18 @@ void DrawOrderSystem::InsertObject(Collider& c)
     objects.push_back(&c);
 }
 
+void DrawOrderSystem::RemoveObject(Collider &c)
+{
+    for(int i = 0; i < objects.size(); i++)
+    {
+        if(objects[i] == &c)
+        {
+            objects.erase(objects.begin() + i);
+            return;
+        }
+    }
+}
+
 void DrawOrderSystem::SortObjects()
 {
     auto sortRuleLambda = [] (Collider* &a, Collider* &b) -> bool

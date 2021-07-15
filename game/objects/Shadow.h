@@ -4,6 +4,10 @@
 
 #pragma once
 
+#include "collision/Collider.h"
+#include "../tool/layering/DrawOrderSystem.h"
+#include "../../utility/AssetPath.h"
+
 /* Shadows
  * The plan is to divide up what is below an object
  * in levels and then make rectangular images to display
@@ -14,7 +18,21 @@
  * a isometric circle image which only uses 1 y level
  */
 
-class Shadow
+class Shadow : public Collider
 {
+private:
+    bool applied = false;
+    DrawOrderSystem* DOS;
+    v3 position;
+    Collider* parent;
 
+public:
+    static void CreateImages();
+    void ApplyImage();
+
+    Shadow(Collider& parent, DrawOrderSystem &DOS);
+
+    void UpdatePosition();
+
+    ~Shadow();
 };

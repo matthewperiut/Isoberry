@@ -45,9 +45,10 @@ void Player::KeyboardInput(olc::PixelGameEngine& g)
     }
 }
 
-void Player::Move(float fElapsedTime, DrawOrderSystem &dos)
+void Player::Move(float fElapsedTime)
 {
-    Object::Move(fElapsedTime, dos);
+    Object::Move(fElapsedTime, *DOS);
+    shadow.UpdatePosition();
 
     if(CollisionBelow())
         velocity.y = 0;

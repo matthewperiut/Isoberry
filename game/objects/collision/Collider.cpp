@@ -89,6 +89,16 @@ olc::vf2d Collider::CornerOnScreen(bool mx, bool my, bool mz, olc::vf2d* offset)
     return mpos.toScreen(permOffset);
 }
 
+v3 &Collider::GetSizeRef()
+{
+    return size;
+}
+
+v3 &Collider::GetPositionRef()
+{
+    return *positionPtr;
+}
+
 olc::vf2d Collider::GetTopLeft(olc::vf2d offset)
 {
     return olc::vf2d(
