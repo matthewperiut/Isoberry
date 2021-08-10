@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.19)
 
 project(Isoberry)
 
+# sudo dnf groupinstall "Development Tools" "Development Libraries"
+# sudo dnf install glew-devel SDL2-devel SDL2_image-devel glm-devel freetype-devel
+# sudo dnf install g++
+# sudo dnf install enet-devel.x86_64
 set(CMAKE_CXX_STANDARD 20)
 set(ISOBERRY_VERSION 0.1)
 
