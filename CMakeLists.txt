@@ -27,6 +27,8 @@ file (GLOB MY_SRC
         "game/objects/animation/*.h"
         "game/objects/*.cpp"
         "game/objects/*.h"
+        "game/editor/*.cpp"
+        "game/editor/*.h"
         "game/tool/*.cpp"
         "game/tool/*.h"
         "game/tool/sprite_saving/*.cpp"
@@ -96,3 +98,5 @@ if (UNIX)
     target_link_libraries(Isoberry Threads::Threads)
 
 endif (UNIX)
+
+#target_link_directories(Isoberry ${ENET_LIBRARIES})
