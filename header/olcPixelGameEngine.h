@@ -4141,8 +4141,12 @@ namespace olc {
 #if defined(__APPLE__)
          static void scrollWheelUpdate(id selff, SEL _sel, id theEvent) {
              static const SEL deltaYSel = sel_registerName("deltaY");
-            /*
+
+             #if defined(__aarch64__) // change for native Apple silicon
+             double deltaY = ((double (*)(id, SEL))objc_msgSend)(theEvent, deltaYSel);
+             #else
              double deltaY = ((double (*)(id, SEL))objc_msgSend_fpret)(theEvent, deltaYSel);
+             #endif
 
              for(int i = 0; i < abs(deltaY); i++) {
                  if (deltaY > 0) {
@@ -4151,7 +4155,7 @@ namespace olc {
                  else if (deltaY < 0) {
                      ptrPGE->olc_UpdateMouseWheel(1);
                  }
-             }*/
+             }
 
 
          }
