@@ -16,8 +16,8 @@ void ObjectMaker::SetDrawOrderSystem(DrawOrderSystem& DOS)
     }
 
     this->DOS = &DOS;
-    DOS.InsertObject(object);
     UpdateObjectSize();
+    DOS.InsertObject(object);
 }
 void ObjectMaker::UpdateObjectSize()
 {
@@ -27,8 +27,6 @@ void ObjectMaker::UpdateObjectSize()
         delete decal;
     }
 
-    olc::vi2d size = object.Get2dSize();
-
     sprite = object.CreateSpriteDebugDraw();
     decal = new olc::Decal(sprite);
     object.dec = decal;
@@ -36,7 +34,10 @@ void ObjectMaker::UpdateObjectSize()
 void ObjectMaker::ObjectMakerStudio(float fElapsedTime)
 {
     if(engine->GetKey(olc::Key::L).bPressed)
+    {
         active = !active;
+        decal->Update();
+    }
     if(!active)
         return;
 
@@ -55,6 +56,7 @@ void ObjectMaker::ObjectMakerStudio(float fElapsedTime)
             Resize();
             break;
     }
+    object.Move(fElapsedTime, *DOS);
 }
 void ObjectMaker::SelectMode(float fElapsedTime)
 {
@@ -135,6 +137,23 @@ void ObjectMaker::SelectAxis()
 void ObjectMaker::Move()
 {
     SelectAxis();
+
+    v3& velocity = object.velocity;
+    velocity = v3(0,0,0);
+    v3 axisBasedDirection = v3((axis == 'X'),(axis == 'Y'),(axis == 'Z'));
+    const v3 speed = v3(50,50,50);
+
+    std::cout << object.position << std::endl;
+
+    if(engine->GetMouseWheel() > 0)
+    {
+        object.velocity = axisBasedDirection * speed;
+    }
+    if(engine->GetMouseWheel() < 0)
+    {
+        object.velocity = -axisBasedDirection * speed;
+    }
+
 }
 void ObjectMaker::Resize()
 {
