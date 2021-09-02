@@ -13,8 +13,23 @@ Game::Game() {
     sAppName = "Isoberry";
 }
 
+olc::Sprite* debugOverlay;
+olc::Decal* debugOverlayDecal;
 bool Game::OnUserCreate()
 {
+    debugOverlay = new olc::Sprite(ScreenWidth(), ScreenHeight());
+    for(int i = 0; i < ScreenWidth(); i++)
+    {
+        for(int j = 0; j < ScreenHeight(); j++)
+        {
+            debugOverlay->SetPixel(i, j, olc::BLANK);
+        }
+    }
+    debugOverlayDecal = new olc::Decal(debugOverlay);
+
+    maker.SetGameEngine(*this);
+    maker.SetDrawOrderSystem(l.DOS);
+
     Clear(olc::Pixel(52, 92, 72));
     l = Level(*this);
     l.LoadFromFile(GetAssetPath() + "levels/basis.txt");
@@ -26,6 +41,7 @@ bool Game::OnUserCreate()
 
 bool Game::OnUserUpdate(float fElapsedTime)
 {
+    maker.ObjectMakerStudio(fElapsedTime);
     res.handle(*this);
 
     // temporary
@@ -42,10 +58,13 @@ bool Game::OnUserUpdate(float fElapsedTime)
     test.Move(fElapsedTime);
 
     l.DOS.DrawAll();
+    DrawDecal(olc::vf2d(0,0), debugOverlayDecal);
     return true;
 }
 
 bool Game::OnUserDestroy()
 {
+    delete debugOverlay;
+    delete debugOverlayDecal;
     return true;
 }

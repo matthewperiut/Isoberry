@@ -12,12 +12,14 @@
 #include "level/Level.h"
 #include "objects/Object.h"
 #include "objects/Player.h"
+#include "editor/ObjectMaker.h"
 
 class Game : public olc::PixelGameEngine
 {
 public:
     Game();
 public:
+    ObjectMaker maker;
     ResolutionDialogue res;
     Level l;
 
