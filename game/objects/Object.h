@@ -47,7 +47,6 @@ private:
     bool MoveYPos(std::vector<Collider*>* cols);
     bool MoveYNeg(std::vector<Collider*>* cols);
 
-    void ApplyGravity();
 public:
     bool CollisionAbove();
     bool CollisionBelow();
@@ -55,4 +54,5 @@ public:
     void setDecal(olc::Decal* decal);
 
     void Move(float fElapsedTime, DrawOrderSystem& dos);
+    void ApplyGravity();
 };

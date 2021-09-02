@@ -66,8 +66,6 @@ void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
         directions[YPos] = false;
         directions[YNeg] = false;
     }
-
-    ApplyGravity();
 }
 
 // The reason for separating pos and neg even though seemingly
