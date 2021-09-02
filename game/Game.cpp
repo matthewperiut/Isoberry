@@ -27,12 +27,12 @@ bool Game::OnUserCreate()
     }
     debugOverlayDecal = new olc::Decal(debugOverlay);
 
-    maker.SetGameEngine(*this);
-    maker.SetDrawOrderSystem(l.DOS);
-
     Clear(olc::Pixel(52, 92, 72));
     l = Level(*this);
     l.LoadFromFile(GetAssetPath() + "levels/basis.txt");
+
+    maker.SetGameEngine(*this);
+    maker.SetDrawOrderSystem(l.DOS);
 
     Shadow::CreateImages();
     test.Construct();
