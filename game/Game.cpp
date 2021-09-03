@@ -41,6 +41,7 @@ bool Game::OnUserCreate()
 
 bool Game::OnUserUpdate(float fElapsedTime)
 {
+    Clear(olc::Pixel(52, 92, 72));
     maker.ObjectMakerStudio(fElapsedTime);
     res.handle(*this);
 

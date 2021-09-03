@@ -48,7 +48,7 @@ void ObjectMaker::ObjectMakerStudio(float fElapsedTime)
     switch(mode)
     {
         case modes::clear:
-            return;
+            break;
         case modes::move:
             Move();
             break;
@@ -143,8 +143,6 @@ void ObjectMaker::Move()
     v3 axisBasedDirection = v3((axis == 'X'),(axis == 'Y'),(axis == 'Z'));
     const v3 speed = v3(50,50,50);
 
-    std::cout << object.position << std::endl;
-
     if(engine->GetMouseWheel() > 0)
     {
         object.velocity = axisBasedDirection * speed;
@@ -157,7 +155,40 @@ void ObjectMaker::Move()
 }
 void ObjectMaker::Resize()
 {
+    SelectAxis();
 
+    v3 axisBasedDirection = v3((axis == 'X'),(axis == 'Y'),(axis == 'Z'));
+    v3& size = object.GetSizeRef();
+    v3 oldSize = size;
+    if(engine->GetMouseWheel() > 0)
+    {
+        size += axisBasedDirection;
+    }
+    else if(engine->GetMouseWheel() < 0)
+    {
+        size -= axisBasedDirection;
+    }
+    else
+    {
+        return;
+    }
+    if (DOS->IsColliding(object))
+    {
+        size = oldSize;
+        return;
+    }
+    if (size.x < 1)
+        size.x = 1;
+    if (size.y < 1)
+        size.y = 1;
+    if (size.z < 1)
+        size.z = 1;
+    UpdateObjectSize();
+}
+
+Object ObjectMaker::GetObject()
+{
+    return object;
 }
 
 ObjectMaker::~ObjectMaker()

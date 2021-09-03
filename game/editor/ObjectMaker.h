@@ -37,11 +37,12 @@ public: // MUST use per frame
 
 private: // subcomponents of ObjectMakerStudio
     void SelectMode(float fElapsedTime);
+    void SelectAxis();
     void Move();
     void Resize();
 
 public:
     ~ObjectMaker();
 
-    void SelectAxis();
+    Object GetObject();
 };

@@ -53,10 +53,14 @@ olc::Sprite* Collider::CreateSpriteDebugDraw(olc::Pixel outlineColor)
             colliderSprite->SetPixel(i,j,olc::BLANK);
         }
     }
+
+    // Temporary fix for strange negative behavior in CornerOnScreenNormalized()
+    olc::vi2d adjustment = olc::vi2d(0,abs(CornerOnScreenNormalized(box[0][1][0],box[0][1][1],box[0][1][2]).y));
+
     for(int i = 0; i < 12; i++)
     {
-        DrawLineToSprite(CornerOnScreenNormalized(box[i][0][0],box[i][0][1],box[i][0][2]),
-                         CornerOnScreenNormalized(box[i][1][0],box[i][1][1],box[i][1][2]), outlineColor, *colliderSprite);
+        DrawLineToSprite(CornerOnScreenNormalized(box[i][0][0],box[i][0][1],box[i][0][2]) + adjustment,
+                         CornerOnScreenNormalized(box[i][1][0],box[i][1][1],box[i][1][2]) + adjustment, outlineColor, *colliderSprite);
 
     }
     return colliderSprite;
