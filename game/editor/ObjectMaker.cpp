@@ -1,3 +1,7 @@
+//
+// Created by matthewperiut on 9/3/2021.
+//
+
 #include "ObjectMaker.h"
 #include "../../header/GlobalVariable.h"
 #include "../tool/draw_sprites/DrawLineToSprite.h"

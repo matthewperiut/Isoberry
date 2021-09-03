@@ -1,5 +1,5 @@
 //
-// Created by Matthew Periut on 5/24/21.
+// Created by matthewperiut on 5/24/21.
 //
 
 #include "Object.h"
