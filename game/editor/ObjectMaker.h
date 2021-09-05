@@ -2,7 +2,7 @@
 // Created by matthewperiut on 9/3/2021.
 //
 
-#include "../objects/Object.h"
+#include "../objects/Physical.h"
 
 class ObjectMaker
 {
@@ -12,7 +12,7 @@ private:
 
     olc::Sprite* sprite{ nullptr };
     olc::Decal* decal{ nullptr };
-    Object object{v3(10,10,10), v3(-11, 0, 0)};
+    Physical object{v3(10,10,10), v3(-11, 0, 0)};
 
     float countedTime = 10;
     std::string textMode = "Clear";
@@ -48,5 +48,5 @@ private: // subcomponents of ObjectMakerStudio
 public:
     ~ObjectMaker();
 
-    Object GetObject();
+    Physical GetObject();
 };

@@ -5,11 +5,11 @@
 #pragma once
 
 #include "../tool/v3.h"
-#include "Object.h"
+#include "Physical.h"
 #include "../../utility/AssetPath.h"
 #include "Shadow.h"
 
-class Player : public Object
+class Player : public Physical
 {
 private:
     DrawOrderSystem* DOS;
@@ -43,11 +43,11 @@ public:
 
         shadow.ApplyImage();
     }
-    Player(const v3 &size, DrawOrderSystem& DOS) : Object(size), shadow(*this, DOS), DOS(&DOS)
+    Player(const v3 &size, DrawOrderSystem& DOS) : Physical(size), shadow(*this, DOS), DOS(&DOS)
     {
 
     }
-    Player(const v3& size, const v3& position, DrawOrderSystem& DOS) : Object(size, position), shadow(*this, DOS), DOS(&DOS)
+    Player(const v3& size, const v3& position, DrawOrderSystem& DOS) : Physical(size, position), shadow(*this, DOS), DOS(&DOS)
     {
 
     }

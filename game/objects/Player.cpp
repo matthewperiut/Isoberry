@@ -47,8 +47,8 @@ void Player::KeyboardInput(olc::PixelGameEngine& g)
 
 void Player::Move(float fElapsedTime)
 {
-    Object::Move(fElapsedTime, *DOS);
-    Object::ApplyGravity();
+    Physical::Move(fElapsedTime, *DOS);
+    Physical::ApplyGravity();
     shadow.UpdatePosition();
 
     if(CollisionBelow())

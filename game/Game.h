@@ -10,7 +10,7 @@
 #include "tool/input/ResolutionDialogue.h"
 #include "tool/layering/DrawOrderSystem.h"
 #include "level/Level.h"
-#include "objects/Object.h"
+#include "objects/Physical.h"
 #include "objects/Player.h"
 #include "editor/ObjectMaker.h"
 

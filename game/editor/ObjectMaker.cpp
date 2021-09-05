@@ -46,7 +46,7 @@ void ObjectMaker::ObjectMakerStudio(float fElapsedTime)
         return;
 
     // 12 chars * 8 pixels = 96, plus 8 more for one space = 104
-    engine->DrawStringDecal(olc::vf2d(engine->ScreenWidth()-(8*textMode.size())-104,0), "Object Maker");
+    engine->DrawStringDecal(olc::vf2d(engine->ScreenWidth()-(8*textMode.size())-104,0), "Physical Maker");
 
     SelectMode(fElapsedTime);
     switch(mode)
@@ -190,7 +190,7 @@ void ObjectMaker::Resize()
     UpdateObjectSize();
 }
 
-Object ObjectMaker::GetObject()
+Physical ObjectMaker::GetObject()
 {
     return object;
 }

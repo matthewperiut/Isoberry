@@ -2,9 +2,9 @@
 // Created by matthewperiut on 5/24/21.
 //
 
-#include "Object.h"
+#include "Physical.h"
 
-bool Object::NotCollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
+bool Physical::NotCollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
     for(auto & col : *cols)
     {
         if (col == (Collider*) this)
@@ -16,7 +16,7 @@ bool Object::NotCollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
     return true;
 }
 
-void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
+void Physical::Move(float fElapsedTime, DrawOrderSystem &dos)
 {
     this->fElapsedTime = fElapsedTime;
     std::vector<Collider*>* cols;
@@ -71,7 +71,7 @@ void Object::Move(float fElapsedTime, DrawOrderSystem &dos)
 // The reason for separating pos and neg even though seemingly
 // unnecessary right now, it's for later optimization
 
-bool Object::MoveXPos(std::vector<Collider *> *cols)
+bool Physical::MoveXPos(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -88,7 +88,7 @@ bool Object::MoveXPos(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::MoveXNeg(std::vector<Collider *> *cols)
+bool Physical::MoveXNeg(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -105,7 +105,7 @@ bool Object::MoveXNeg(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::MoveZPos(std::vector<Collider *> *cols)
+bool Physical::MoveZPos(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -122,7 +122,7 @@ bool Object::MoveZPos(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::MoveZNeg(std::vector<Collider *> *cols)
+bool Physical::MoveZNeg(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -139,7 +139,7 @@ bool Object::MoveZNeg(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::MoveYPos(std::vector<Collider *> *cols)
+bool Physical::MoveYPos(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -156,7 +156,7 @@ bool Object::MoveYPos(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::MoveYNeg(std::vector<Collider *> *cols)
+bool Physical::MoveYNeg(std::vector<Collider *> *cols)
 {
     v3 pos = position;
     Collider temp = *this;
@@ -173,22 +173,22 @@ bool Object::MoveYNeg(std::vector<Collider *> *cols)
     return !any;
 }
 
-bool Object::CollisionAbove()
+bool Physical::CollisionAbove()
 {
     return directions[YPos];
 }
 
-bool Object::CollisionBelow()
+bool Physical::CollisionBelow()
 {
     return directions[YNeg];
 }
 
-void Object::setDecal(olc::Decal *decal)
+void Physical::setDecal(olc::Decal *decal)
 {
     dec = decal;
 }
 
-void Object::ApplyGravity() {
+void Physical::ApplyGravity() {
     if(hasGravity)
     {
         if(velocity.y > gravity*10)

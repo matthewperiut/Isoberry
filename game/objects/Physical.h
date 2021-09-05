@@ -8,10 +8,10 @@
 #include "collision/Collider.h"
 #include "../tool/layering/DrawOrderSystem.h"
 
-class Object : public Collider
+class Physical : public Collider
 {
 public:
-    // vars to do with type of Object
+    // vars to do with type of Physical
     bool isPlayer = false;
     bool isEntity = false;
     bool isPushable = false;
@@ -28,11 +28,11 @@ private:
     bool directions[6]{ false };
 
 public:
-    Object(const v3& size, const v3& position) : Collider(size, this->position)
+    Physical(const v3& size, const v3& position) : Collider(size, this->position)
     {
         this->position = position;
     }
-    explicit Object(const v3& size) : Object(size, this->position)
+    explicit Physical(const v3& size) : Physical(size, this->position)
     {
 
     }

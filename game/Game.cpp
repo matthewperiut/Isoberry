@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "../utility/AssetPath.h"
 #include "tool/input/Options.h"
-#include "objects/Object.h"
+#include "objects/Physical.h"
 
 Game::Game() {
     sAppName = "Isoberry";
