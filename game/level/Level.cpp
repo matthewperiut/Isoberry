@@ -8,54 +8,35 @@
 void Level::LoadFromFile(std::string path)
 {
     std::ifstream file(path);
-    std::string out;
-    while(file >> out)
+    std::string line;
+    while(std::getline(file, line))
     {
-        if(out == "RESERVE")
+        std::istringstream stream(line);
+        std::string mode;
+        stream >> mode;
+
+        if (mode == "BOX")
         {
-            file >> numberReserved;
-            for(int i = 0; i < numberReserved; i++)
             {
-                images.emplace_back();
-                positions.emplace_back();
-                colliders.emplace_back(v3(10,10,10), tempPos);
-            }
-        }
-        if(out == "BOX")
-        {
-            v3& p = positions[numberImported];
-            p = v3(0,0,0);
-            file >> p.x >> p.y >> p.z;
-
-            //s = size
-            v3 s = v3(0,0,0);
-            file >> s.x >> s.y >> s.z;
-
-            Collider& c = colliders[numberImported];
-            c = Collider(s, p);
-
-            int imgIndex = numberImported;
-            bool found = false;
-            std::string imgPath;
-            file >> imgPath;
-            for(int i = 0; i < numberImported; i++)
-            {
-                if(*(imgpaths[i]) == imgPath)
+                v3 p, s;
+                if(stream >> p.x >> p.y >> p.z >> s.x >> s.y >> s.z)
                 {
-                    imgIndex = i;
-                    found = true;
+                    objects.push_back(new Object(s, p));
                 }
             }
-            if(!found)
+
+            Object& current = *objects[objects.size()-1];
+
+            current.AbsorbWireframe(current.CreateSpriteDebugDraw());
+
+            std::string path;
+            if (stream >> path)
             {
-                images[numberImported] = new Img(GetAssetPath() + imgPath);
-                imgpaths.push_back(&(images[numberImported]->filePath));
+                current.AbsorbImgPtr(new Img(GetAssetPath() + path));
             }
 
-            c.dec = images[imgIndex]->GetDecPtr();
-            DOS.InsertObject(c);
-
-            numberImported++;
+            current.UpdateDec();
+            DOS.InsertObject(current);
         }
     }
 }
@@ -67,9 +48,9 @@ void Level::DrawAll()
 
 Level::~Level()
 {
-    for(int i = 0; i < numberImported; i++)
+    for(int i = 0; i < objects.size(); i++)
     {
-        delete images[i];
+        delete objects[i];
     }
 }
 
