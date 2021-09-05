@@ -23,6 +23,10 @@ void Level::LoadFromFile(std::string path)
                 {
                     objects.push_back(new Object(s, p));
                 }
+                else
+                {
+                    continue;
+                }
             }
 
             Object& current = *objects[objects.size()-1];
