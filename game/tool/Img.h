@@ -23,6 +23,7 @@ public:
     Img(olc::vi2d size);
     Img(std::string path);
     Img(std::string path, olc::vi2d pos);
+    Img(olc::Sprite* sprPtr);
     Img(const Img &img);
 
     olc::Sprite* GetSprPtr();

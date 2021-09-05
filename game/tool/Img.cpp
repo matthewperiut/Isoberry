@@ -49,6 +49,12 @@ Img::Img(const Img &img)
     this->dec.get()->Update();
 }
 
+Img::Img(olc::Sprite* sprPtr)
+{
+    spr = std::unique_ptr<olc::Sprite>(sprPtr);
+    dec = std::make_unique<olc::Decal>(spr.get());
+}
+
 olc::Sprite* Img::GetSprPtr()
 {
     return spr.get();
