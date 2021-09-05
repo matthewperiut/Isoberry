@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../tool/v3.h"
-#include "collision/Collider.h"
-#include "../tool/layering/DrawOrderSystem.h"
+#include "../../tool/v3.h"
+#include "Collider.h"
+#include "../../tool/layering/DrawOrderSystem.h"
 
 class Physical : public Collider
 {

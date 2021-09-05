@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../tool/v3.h"
-#include "Physical.h"
+#include "collision/Physical.h"
 #include "../../utility/AssetPath.h"
 #include "Shadow.h"
 

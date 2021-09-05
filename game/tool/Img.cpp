@@ -63,7 +63,7 @@ olc::Decal* Img::GetDecPtr()
 {
     return dec.get();
 }
-std::string Img::GetFilePath()
+std::string& Img::GetFilePath()
 {
     return filePath;
 }

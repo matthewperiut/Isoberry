@@ -2,7 +2,7 @@
 // Created by matthewperiut on 9/3/2021.
 //
 
-#include "../objects/Physical.h"
+#include "../objects/collision/Physical.h"
 
 class ObjectMaker
 {

@@ -28,5 +28,5 @@ public:
 
     olc::Sprite* GetSprPtr();
     olc::Decal* GetDecPtr();
-    std::string GetFilePath();
+    std::string& GetFilePath();
 };
