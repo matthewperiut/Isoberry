@@ -16,6 +16,6 @@ public:
     bool vsync{ true };
     bool fullscreen{ false };
 
-    int scale{ 3 };
+    int scale{ 4 };
     olc::vi2d resolution{0,0};
 };

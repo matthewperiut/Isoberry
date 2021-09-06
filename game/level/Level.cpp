@@ -31,7 +31,7 @@ void Level::LoadFromFile(std::string path)
 
             Object& current = *objects[objects.size()-1];
 
-            current.AbsorbWireframe(current.CreateSpriteDebugDraw());
+            current.AbsorbWireframe(current.CreateSpriteDebugDraw(olc::Pixel(rand()%255,rand()%255,rand()%255)));
 
             std::string path;
             if (stream >> path)
