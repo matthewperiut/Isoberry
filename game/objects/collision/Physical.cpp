@@ -13,6 +13,10 @@ bool Physical::NotCollidingWithAny(Collider &c, std::vector<Collider *> *cols) {
         if(current.isColliding(c))
             return false;
     }
+
+    if(c.minY() < 0)
+        return false;
+
     return true;
 }
 
