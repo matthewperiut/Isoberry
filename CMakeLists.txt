@@ -20,7 +20,6 @@ file (GLOB MY_SRC
         "utility/*.h"
         "utility/settings/*.cpp"
         "utility/settings/*.h"
-        "assets/*.h"
         "game/objects/collision/*.cpp"
         "game/objects/collision/*.h"
         "game/objects/animation/*.cpp"
