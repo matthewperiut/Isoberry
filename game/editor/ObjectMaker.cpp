@@ -5,6 +5,7 @@
 #include "ObjectMaker.h"
 #include "../../header/GlobalVariable.h"
 #include "../tool/draw_sprites/DrawLineToSprite.h"
+#include "../tool/sprite_saving/Saving.h"
 
 ObjectMaker::ObjectMaker() = default;
 
@@ -201,4 +202,9 @@ ObjectMaker::~ObjectMaker()
         delete sprite;
         delete decal;
     }
+}
+
+void ObjectMaker::Save(std::string path)
+{
+    SaveSprite(sprite, path);
 }

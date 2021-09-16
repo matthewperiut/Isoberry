@@ -76,7 +76,7 @@ void compress(std::string filepath) {
 }
 
 // Thank you svpng for giving me the ability to save
-void SaveSprite(Sprite* spr, std::string filepath)
+void save(Sprite* spr, std::string filepath)
 {
     std::vector<unsigned char>* v = new std::vector<unsigned char>;
     v->reserve(spr->width * spr->height * 4);
@@ -109,9 +109,14 @@ void SaveSprite(Sprite* spr, std::string filepath)
     unsigned char* a = &(*v)[0];
     svpng(fp, spr->width, spr->height, a, 1);
     fclose(fp);
-    //std::thread task(compress, filepath);
-    //task.detach();
+    compress(filepath);
     delete v;
+}
+
+void SaveSprite(Sprite* spr, std::string filepath)
+{
+    std::thread task(save, spr, filepath);
+    task.detach();
 }
 
 void SaveSprite(Sprite& spr, std::string filepath)

@@ -49,4 +49,5 @@ public:
     ~ObjectMaker();
 
     Physical GetObject();
+    void Save(std::string path);
 };
