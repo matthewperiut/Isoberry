@@ -59,6 +59,7 @@ public:
     olc::vf2d GetTopLeft(olc::vf2d offset);
     olc::vi2d CornerOnScreenNormalized(bool mx, bool my, bool mz);
     olc::Sprite* CreateSpriteDebugDraw(olc::Pixel outlineColor = olc::WHITE);
+    olc::Sprite* CreateFlatShadow(olc::Pixel fillColor);
 
     olc::vf2d CornerOnScreen(bool mx, bool my, bool mz, olc::vf2d *offset = nullptr);
 

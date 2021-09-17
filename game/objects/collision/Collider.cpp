@@ -66,6 +66,61 @@ olc::Sprite* Collider::CreateSpriteDebugDraw(olc::Pixel outlineColor)
     return colliderSprite;
 }
 
+olc::Sprite* Collider::CreateFlatShadow(olc::Pixel fillColor)
+{
+    int tempY = size.y;
+    size.y = 1;
+    olc::vf2d sprSize = Get2dSize();
+    size.y = tempY;
+
+    auto* shadowSprite = new olc::Sprite(sprSize.x+1, sprSize.y+1);
+    for(int i = 0; i < shadowSprite->width; i++)
+    {
+        for(int j = 0; j < shadowSprite->height; j++)
+        {
+            shadowSprite->SetPixel(i,j,olc::BLANK);
+        }
+    }
+
+    olc::Pixel grey(128,128,128,128);
+
+    // Temporary fix for strange negative behavior in CornerOnScreenNormalized()
+    olc::vi2d adjustment = olc::vi2d(0,CornerOnScreenNormalized(box[0][1][0],box[0][1][1],box[0][1][2]).y+1);
+
+    DrawLineToSprite(CornerOnScreenNormalized(box[5][0][0],box[5][0][1],box[5][0][2]) + adjustment,
+                     CornerOnScreenNormalized(box[5][1][0],box[5][1][1],box[5][1][2]) + adjustment, fillColor, *shadowSprite);
+    DrawLineToSprite(CornerOnScreenNormalized(box[6][0][0],box[6][0][1],box[6][0][2]) + adjustment,
+                     CornerOnScreenNormalized(box[6][1][0],box[6][1][1],box[6][1][2]) + adjustment, fillColor, *shadowSprite);
+    DrawLineToSprite(CornerOnScreenNormalized(box[7][0][0],box[7][0][1],box[7][0][2]) + adjustment,
+                     CornerOnScreenNormalized(box[7][1][0],box[7][1][1],box[7][1][2]) + adjustment, fillColor, *shadowSprite);
+    DrawLineToSprite(CornerOnScreenNormalized(box[11][0][0],box[11][0][1],box[11][0][2]) + adjustment,
+                     CornerOnScreenNormalized(box[11][1][0],box[11][1][1],box[11][1][2]) + adjustment, fillColor, *shadowSprite);
+
+    for(int y = 0; y < shadowSprite->height; y++)
+    {
+        int minX = -1;
+        int maxX = -1;
+        for(int x = 0; x < shadowSprite->width; x++)
+        {
+            bool isPixel = shadowSprite->GetPixel(x,y) == fillColor;
+            if(isPixel)
+            {
+                if(minX == -1)
+                    minX = x;
+                maxX = x;
+                if(y==4)
+                {
+                    std::cout << "(" << x << "," << y << ") min: " << minX << " max: " << maxX << "\n";
+                }
+            }
+        }
+        if(minX != maxX)
+            DrawLineToSprite(olc::vf2d(minX,y), olc::vf2d(maxX,y), fillColor, *shadowSprite);
+    }
+
+    return shadowSprite;
+}
+
 void Collider::DebugDraw(olc::PixelGameEngine &game, olc::vf2d offset)
 {
     //This is exclusively to update offset while drawing this state.
