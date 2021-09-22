@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.19)
 
 project(Isoberry)
 
+# CMAKE extensions
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 # sudo dnf groupinstall "Development Tools" "Development Libraries"
 # sudo dnf install glew-devel SDL2-devel SDL2_image-devel glm-devel freetype-devel
 # sudo dnf install g++
@@ -69,6 +72,9 @@ if (APPLE)
             MACOSX_BUNDLE_BUNDLE_VERSION ${ISOBERRY_VERSION}
             MACOSX_BUNDLE_SHORT_VERSION_STRING ${ISOBERRY_VERSION}
             )
+
+    set(OPENSSL_INCLUDE_DIR /usr/local/opt/openssl)
+    set(OPENSSL_CRYPTO_LIBRARY /usr/local/opt/openssl/lib)
 endif(APPLE)
 
 if (UNIX)
@@ -98,4 +104,8 @@ if (UNIX)
 
 endif (UNIX)
 
-#target_link_directories(Isoberry ${ENET_LIBRARIES})
+find_package(OpenSSL REQUIRED)
+find_package(ENet REQUIRED)
+include_directories(${ENET_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR})
+target_link_libraries(Isoberry ${ENET_LIBRARIES})
+target_link_libraries(Isoberry ${OPEN_SSL_LIBRARY})
