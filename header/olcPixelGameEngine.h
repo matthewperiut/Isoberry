@@ -3028,7 +3028,6 @@ namespace olc
 #endif
 
 #if defined(__APPLE__)
-	#define GL_SILENCE_DEPRECATION
 	#include <OpenGL/OpenGL.h>
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glu.h>
@@ -3188,7 +3187,7 @@ namespace olc
 			SetDecalMode(olc::DecalMode::NORMAL);
 		}
 
-		void SetDecalMode(const olc::DecalMode& mode)
+		void SetDecalMode(const olc::DecalMode& mode) override
 		{
 			if (mode != nDecalMode)
 			{
