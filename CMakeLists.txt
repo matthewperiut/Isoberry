@@ -54,10 +54,7 @@ if (WIN32 OR LINUX)
 endif (WIN32 OR LINUX)
 
 if (APPLE)
-    # OpenGL on Macs be wild
-    add_compile_definitions(GL_SILENCE_DEPRECATION)
-
-    add_compile_options(-stdlib=libc++)
+    add_compile_options(-stdlib=libc++ -framework Carbon)
 
     set(CUR_TARGET Isoberry)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
@@ -86,32 +83,29 @@ if (UNIX)
         find_package(X11 REQUIRED)
         include_directories(${X11_INCLUDE_DIR})
         link_directories(${X11_LIBRARIES})
-        target_link_libraries(Isoberry PUBLIC ${X11_LIBRARIES})
+        target_link_libraries(Isoberry ${X11_LIBRARIES})
     endif(LINUX)
     # GLUT
     if(APPLE)
         find_package(GLUT REQUIRED)
         include_directories(${GLUT_INCLUDE_DIR})
         link_directories(${GLUT_LIBRARIES})
-        target_link_libraries(Isoberry PUBLIC ${GLUT_LIBRARIES})
+        target_link_libraries(Isoberry ${GLUT_LIBRARIES})
     endif(APPLE)
 
     find_package(OpenGL REQUIRED)
     include_directories(${OPENGL_INCLUDE_DIR})
     link_directories(${OPENGL_LIBRARIES})
-    target_link_libraries(Isoberry PUBLIC ${OPENGL_LIBRARIES})
+    target_link_libraries(Isoberry ${OPENGL_LIBRARIES})
 
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
-    target_link_libraries(Isoberry PUBLIC Threads::Threads)
+    target_link_libraries(Isoberry Threads::Threads)
 
 endif (UNIX)
 
 find_package(OpenSSL REQUIRED)
 find_package(ENet REQUIRED)
 include_directories(${ENET_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR})
-target_link_libraries(Isoberry PRIVATE ${ENET_LIBRARIES})
-target_link_libraries(Isoberry PRIVATE ${OPEN_SSL_LIBRARIES})
-
-add_subdirectory(ext/Boxer EXCLUDE_FROM_ALL)
-target_link_libraries(Isoberry PRIVATE Boxer)
+target_link_libraries(Isoberry ${ENET_LIBRARIES})
+target_link_libraries(Isoberry ${OPEN_SSL_LIBRARY})
