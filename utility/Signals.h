@@ -4,4 +4,6 @@
 
 #pragma once
 
+#include <csignal>
+
 void abort(int signum);
