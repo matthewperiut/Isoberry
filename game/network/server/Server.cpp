@@ -6,7 +6,15 @@
 
 Server::Server()
 {
-    std::cout << "Server Starting..." << std::endl;
+    serverThread = std::thread(&Server::Run, this);
+
+    if(gui.Construct(256,144,4,4,false,true))
+        gui.Start();
+}
+
+void Server::Run()
+{
+    gui.InsertMessage("Starting Server...");
 
     address.host = ENET_HOST_ANY;
     address.port = 47623; // ISOBE as phone number
@@ -15,15 +23,12 @@ Server::Server()
 
     if (server == nullptr)
     {
-        std::cout << "Error occurred while creating the Server" << std::endl;
-        exit(EXIT_FAILURE);
+        gui.InsertMessage("[Stopping Server] Error Creating Server");
+        return;
     }
 
-    std::cout << address.host << ":" << address.port << std::endl;
-}
+    gui.InsertMessage("Port:" + std::to_string(address.port));
 
-void Server::Run()
-{
     while(running)
     {
         while(enet_host_service(server, &event, 1000) > 0)
@@ -31,28 +36,27 @@ void Server::Run()
             switch(event.type)
             {
                 case ENET_EVENT_TYPE_CONNECT:
-                    printf ("A new client connected from %x:%u.\n",
-                            event.peer -> address.host,
-                            event.peer -> address.port);
+                    gui.InsertMessage("A new client connected from " +
+                                      std::to_string(event.peer -> address.host) + ":" +
+                                      std::to_string(event.peer -> address.port));
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:
-                    printf ("A packet of length %zu containing %s was received from %x:%u on channel %u.\n",
-                            event.packet -> dataLength,
-                            event.packet -> data,
-                            event.peer -> address.host,
-                            event.peer -> address.port,
-                            event.channelID);
+                    gui.InsertMessage("A packet of length " +
+                                      std::to_string(event.packet -> dataLength) + " containing " +
+                                      std::string(reinterpret_cast<char*>(event.packet -> data)) + " was received from " +
+                                      std::to_string(event.peer -> address.host) + ":" +
+                                      std::to_string(event.peer -> address.port) + " on channel " +
+                                      std::to_string(event.channelID));
                     break;
                 case ENET_EVENT_TYPE_NONE:
                     break;
                 case ENET_EVENT_TYPE_DISCONNECT:
-                    printf ("%x:%u disconnected.\n",
-                            event.peer -> address.host,
-                            event.peer -> address.port);
+                    gui.InsertMessage(std::to_string(event.peer -> address.host) + ":" + std::to_string(event.peer -> address.port) + "Disconnected");
                     break;
             }
         }
     }
+    gui.InsertMessage("Stopping Server...");
 }
 
 Server::~Server()
