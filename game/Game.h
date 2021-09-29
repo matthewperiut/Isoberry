@@ -13,12 +13,16 @@
 #include "objects/collision/Physical.h"
 #include "objects/Player.h"
 #include "editor/ObjectMaker.h"
+#include "network/client/Client.h"
 
 class Game : public olc::PixelGameEngine
 {
 public:
     Game();
 public:
+    Client client;
+    ClientBundle clientBundle;
+
     ObjectMaker maker;
     ResolutionDialogue res;
     Level l;

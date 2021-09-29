@@ -6,12 +6,17 @@
 
 Client::Client()
 {
+
+}
+
+void Client::Run()
+{
     client = enet_host_create(nullptr, 1, 1, 0, 0);
 
     if(client == nullptr)
     {
-        fprintf(stderr, "An error occurred while trying to create an ENet client host");
-        exit(EXIT_FAILURE);
+        std::cerr << "An error occurred while trying to create an ENet client host" << std::endl;
+        return;
     }
 
     //enet_address_set_host(&address, "73.137.115.94");
@@ -21,24 +26,22 @@ Client::Client()
     peer = enet_host_connect(client, &address, 1, 0);
     if(peer == nullptr)
     {
-        fprintf(stderr, "No Server\n");
-        exit(EXIT_FAILURE);
+        std::cerr << "No Server" << std::endl;
+        running = false;
     }
 
-    if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+    if (enet_host_service(client, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
     {
-        puts("Connection to Server successful.");
+        std::cout << "Connection to Server successful." << std::endl;
+        connected = true;
     }
     else
     {
         enet_peer_reset(peer);
-        puts("Connection to Server failed.");
-        exit(EXIT_FAILURE);
+        std::cout << "Connection to Server failed." << std::endl;
+        running = false;
     }
-}
 
-void Client::Run()
-{
     while(running)
     {
         while(enet_host_service(client, &event, 1000) > 0)
@@ -54,7 +57,6 @@ void Client::Run()
                             event.peer -> address.host,
                             event.peer -> address.port,
                             event.channelID);
-                    /* Clean up the packet now that we're done using it. */
                     enet_packet_destroy (event.packet);
                     break;
                 case ENET_EVENT_TYPE_NONE:
@@ -68,18 +70,28 @@ void Client::Run()
 
 Client::~Client()
 {
-    enet_peer_disconnect(peer, 0);
-
-    while(enet_host_service(client, &event, 3000))
+    if(connected)
     {
-        switch(event.type)
+        enet_peer_disconnect(peer, 0);
+
+        while(enet_host_service(client, &event, 3000))
         {
-            case ENET_EVENT_TYPE_RECEIVE:
-                enet_packet_destroy(event.packet);
-                break;
-            case ENET_EVENT_TYPE_DISCONNECT:
-                puts("Disconnection successful");
-                break;
+            switch(event.type)
+            {
+                case ENET_EVENT_TYPE_RECEIVE:
+                    enet_packet_destroy(event.packet);
+                    break;
+                    case ENET_EVENT_TYPE_DISCONNECT:
+                        std::cout << "Disconnection successful" << std::endl;
+                        break;
+            }
         }
     }
+}
+
+void Client::StartThread(ClientBundle &clientBundle)
+{
+    clientBundle.running = &running;
+    this->clientBundle = &clientBundle;
+    clientThread = std::thread(&Client::Run, this);
 }

@@ -28,12 +28,6 @@ int main(int argc, char **argv)
             server.Run();
             return 0;
         }
-        if(std::string(argv[i]) == "client")
-        {
-            Client client;
-            client.Run();
-            return 0;
-        }
         std::cout << "Unrecognized argument: " << argv[i] << std::endl;
     }
 
