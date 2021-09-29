@@ -10,9 +10,12 @@ Settings settings(GetAssetPath() + "settings.txt");
 
 #include "game/network/server/Server.h"
 #include "game/network/client/Client.h"
+#include "utility/Signals.h"
 
 int main(int argc, char **argv)
 {
+    signal(SIGABRT, abort);
+
     if (enet_initialize() != 0)
     {
         fprintf(stderr, "An error has occurred while initializing ENet!\n");

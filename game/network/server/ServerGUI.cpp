@@ -49,18 +49,19 @@ bool ServerGUI::OnUserDestroy()
 
 void ServerGUI::InsertMessage(std::string text)
 {
-    messages.push_back(text);
+    // Help understand the beginning of lines
+    text = " " + text;
 
-    /* Multi-line later
     int charactersPerLine = (ScreenWidth()/8);
-    int lines = text.length() % charactersPerLine;
+    int lines = ceil(float(text.length()) / float(charactersPerLine));
+
     for(int i = 0; i < lines; i++)
     {
-        int length = (1+i)*charactersPerLine;
-        if(text.length() < (1+i)*charactersPerLine)
-            length = text.length();
-        messages.push_back(text.substr(i*charactersPerLine,length));
-    }*/
+        int end = (i+1)*charactersPerLine;
+        if(end > text.length())
+            end = text.length();
+        messages.push_back(text.substr(i*charactersPerLine, end));
+    }
 
     if(messages.size() > ScreenHeight()/8)
         messages.erase(messages.begin());
