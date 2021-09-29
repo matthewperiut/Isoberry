@@ -8,8 +8,35 @@
 Game game;
 Settings settings(GetAssetPath() + "settings.txt");
 
-int main()
+#include "game/network/server/Server.h"
+#include "game/network/client/Client.h"
+
+int main(int argc, char **argv)
 {
+    if (enet_initialize() != 0)
+    {
+        fprintf(stderr, "An error has occurred while initializing ENet!\n");
+        return EXIT_FAILURE;
+    }
+    atexit(enet_deinitialize);
+
+    for(int i = 1; i < argc; i++)
+    {
+        if(std::string(argv[i]) == "server")
+        {
+            Server server;
+            server.Run();
+            return 0;
+        }
+        if(std::string(argv[i]) == "client")
+        {
+            Client client;
+            client.Run();
+            return 0;
+        }
+        std::cout << "Unrecognized argument: " << argv[i] << std::endl;
+    }
+
     if (game.Construct(settings.resolution.x, settings.resolution.y, settings.scale, settings.scale, settings.fullscreen, settings.vsync, true))
         game.Start();
     return 0;
