@@ -11,3 +11,14 @@ void abort(int signum)
     game.client.clientThread.join();
     exit(signum);
 }
+
+Server* globalServerPointer;
+void abortServer(int signum)
+{
+    if(globalServerPointer != nullptr)
+    {
+        globalServerPointer->running = false;
+        globalServerPointer->serverThread.join();
+        exit(signum);
+    }
+}

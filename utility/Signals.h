@@ -6,4 +6,9 @@
 
 #include <csignal>
 
+#include "../game/network/server/Server.h"
+
 void abort(int signum);
+void abortServer(int signum);
+
+extern Server* globalServerPointer;

@@ -3,9 +3,14 @@
 //
 
 #include "Server.h"
+#include "../../../utility/Signals.h"
 
 Server::Server()
 {
+    // Handling ABORT
+    globalServerPointer = this;
+    signal(SIGABRT, abortServer);
+
     serverThread = std::thread(&Server::Run, this);
 
     if(gui.Construct(256,144,4,4,false,true))
@@ -61,5 +66,7 @@ void Server::Run()
 
 Server::~Server()
 {
+    running = false;
+    serverThread.join();
     enet_host_destroy(server);
 }
