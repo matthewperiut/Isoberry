@@ -9,9 +9,33 @@ Client::Client()
 
 }
 
+void Client::SendPlayerData()
+{
+    Player& p = *clientBundle->localPlayer;
+
+    // all in float_t
+    // Format: x, y, z, vx, vy, vz
+    int bytes = (6 * sizeof(float_t));
+    float_t *data = (float_t*)malloc(bytes);
+
+    std::cout << bytes << std::endl;
+
+    data[0] = p.GetPositionRef().x;
+    data[1] = p.GetPositionRef().y;
+    data[2] = p.GetPositionRef().z;
+    data[3] = p.velocity.x;
+    data[4] = p.velocity.y;
+    data[5] = p.velocity.z;
+
+    ENetPacket * packet = enet_packet_create (data, bytes, ENET_PACKET_FLAG_RELIABLE);
+    enet_peer_send (peer, 0, packet);
+
+    free(data);
+}
+
 void Client::Run()
 {
-    client = enet_host_create(nullptr, 1, 1, 0, 0);
+    client = enet_host_create(nullptr, 1, 2, 0, 0);
 
     if(client == nullptr)
     {
@@ -44,6 +68,7 @@ void Client::Run()
 
     while(running)
     {
+        SendPlayerData();
         while(enet_host_service(client, &event, 1000) > 0)
         {
             switch(event.type)

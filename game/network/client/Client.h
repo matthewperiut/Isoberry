@@ -28,4 +28,6 @@ public:
     Client();
     void StartThread(ClientBundle &clientBundle);
     ~Client();
+
+    void SendPlayerData();
 };
