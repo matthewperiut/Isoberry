@@ -1,0 +1,17 @@
+x,y,z,vx,vy,vz are all int32_t
+p is a u_char (max 256 players)
+
+Client:
+channel 0: send x,y,z,vx,vy,vz
+SIZE: 4*6 = 24 bytes
+
+Server:
+
+channel 0: send p, x,y,z,vx,vy,vz // p is player number given from another input
+SIZE: 1 + 2*6 = 25 bytes
+
+### Number of Players (out of 256)
+channel 0: first time send my_id (u_char)
+1 byte.
+channel 0: send player id on joining/leaving/initially (u_char)
+1 byte.

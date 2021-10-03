@@ -9,6 +9,7 @@
 #include "../tool/layering/DrawOrderSystem.h"
 #include "../tool/Img.h"
 #include "../objects/Object.h"
+#include "../objects/Player.h"
 
 class Level
 {
@@ -18,6 +19,9 @@ private:
     std::vector<Object*> objects;
 public:
     DrawOrderSystem DOS;
+    std::string name = "";
+
+    std::vector<Player>* playersPtr;
 public:
     Level();
     Level(olc::PixelGameEngine& g) : engine( &g )

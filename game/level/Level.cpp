@@ -42,6 +42,10 @@ void Level::LoadFromFile(std::string path)
             current.UpdateDec();
             DOS.InsertObject(current);
         }
+        if (mode == "NAME")
+        {
+            stream >> name;
+        }
     }
 }
 

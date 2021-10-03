@@ -133,3 +133,8 @@ void Player::Animate(float fElapsedTime)
         displacement = { 8, 3 };
     }
 }
+
+Player Player::operator=(Player player)
+{
+    return Player(size, position, *DOS);
+}

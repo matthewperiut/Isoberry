@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <enet/enet.h>
 #include "../tool/v3.h"
 #include "collision/Physical.h"
 #include "../../utility/AssetPath.h"
@@ -29,7 +30,10 @@ private:
     // movement
     bool jump = false;
     bool hasLetGoJump = true;
-
+public:
+    // Network variables
+    int id = -1;
+    ENetPeer* peer;
 public:
     void Construct()
     {
@@ -54,6 +58,8 @@ public:
     void KeyboardInput(olc::PixelGameEngine& g);
     void Animate(float fElapsedTime);
     void Move(float fElapsedTime);
+
+    Player operator= (Player player );
     ~Player()
     {
         for(int i = 0; i < spriteSheets.size(); i++)
