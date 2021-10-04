@@ -63,6 +63,7 @@ bool Game::OnUserUpdate(float fElapsedTime)
     test.Move(fElapsedTime);
 
     l.DOS.DrawAll();
+    l.Loop();
     DrawDecal(olc::vf2d(0,0), debugOverlayDecal);
     return true;
 }

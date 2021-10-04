@@ -21,6 +21,8 @@ public:
     ENetEvent event;
     ENetPeer* peer;
 
+    std::vector<Player>* players;
+
 private:
     void Run();
 
@@ -30,4 +32,12 @@ public:
     ~Client();
 
     void SendPlayerData();
+
+    int GetPlayerIndex(int id);
+
+    void HandleID(ENetEvent &ev);
+
+    void HandlePositions(ENetEvent &ev);
+
+    void SetLevel(Level &level);
 };

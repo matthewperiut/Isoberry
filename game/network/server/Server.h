@@ -25,10 +25,22 @@ public:
     ENetEvent event;
 
     std::vector<ENetHost*> clients;
-    std::vector<Player> players;
+    std::vector<Player>* players;
     std::vector<Level> levels;
 
     Server();
     void Run();
     ~Server();
+
+    void AddPlayer(ENetEvent &ev);
+
+    void RemovePlayer(ENetEvent &ev);
+
+    int GetPlayerIndex(ENetPeer *peer);
+
+    void SendByte(ENetEvent &ev, uint8_t data, uint8_t channel, bool toAll = false);
+
+    void HandlePlayerPosition(ENetEvent &ev);
+
+    void SendPlayerPosition(int index);
 };

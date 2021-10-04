@@ -5,7 +5,7 @@
 #include "Level.h"
 #include "../../utility/AssetPath.h"
 
-void Level::LoadFromFile(std::string path)
+void Level::LoadFromFile(std::string path, bool withImages)
 {
     std::ifstream file(path);
     std::string line;
@@ -28,6 +28,9 @@ void Level::LoadFromFile(std::string path)
                     continue;
                 }
             }
+
+            if(!withImages)
+                continue;
 
             Object& current = *objects[objects.size()-1];
 
@@ -65,4 +68,16 @@ Level::~Level()
 Level::Level()
 {
 
+}
+
+void Level::Loop()
+{
+
+    for(int i = 0; i < players.size(); i++)
+    {
+        if(!players[i].constructed)
+            players[i].Construct();
+        if(players[i].eraseMe)
+            players.erase(players.begin() + i);
+    }
 }

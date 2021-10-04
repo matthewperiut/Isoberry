@@ -9,20 +9,24 @@ Client::Client()
 
 }
 
+void Client::SetLevel(Level& level)
+{
+    clientBundle->level = &level;
+    players = &clientBundle->level->players;
+}
+
 void Client::SendPlayerData()
 {
     Player& p = *clientBundle->localPlayer;
 
-    // all in float_t
+    // all in float
     // Format: x, y, z, vx, vy, vz
-    int bytes = (6 * sizeof(float_t));
-    float_t *data = (float_t*)malloc(bytes);
+    int bytes = (6 * sizeof(float));
+    float *data = (float*)malloc(bytes);
 
-    std::cout << bytes << std::endl;
-
-    data[0] = p.GetPositionRef().x;
-    data[1] = p.GetPositionRef().y;
-    data[2] = p.GetPositionRef().z;
+    data[0] = p.position.x;
+    data[1] = p.position.y;
+    data[2] = p.position.z;
     data[3] = p.velocity.x;
     data[4] = p.velocity.y;
     data[5] = p.velocity.z;
@@ -31,6 +35,67 @@ void Client::SendPlayerData()
     enet_peer_send (peer, 0, packet);
 
     free(data);
+}
+
+int Client::GetPlayerIndex(int id)
+{
+    for(int i = 0; i < (*players).size(); i++)
+    {
+        if((*players)[i].id == id)
+            return i;
+    }
+    return -1;
+}
+
+void Client::HandleID(ENetEvent& ev)
+{
+    if (ev.packet->dataLength != 1)
+        return;
+
+    uint8_t id = *ev.packet->data;
+
+    if(id == clientBundle->localPlayer->id)
+        return;
+
+    if (clientBundle->localPlayer->id == -1)
+    {
+        clientBundle->localPlayer->id = id;
+        std::cout << "I am " << int(id) << std::endl;
+        return;
+    }
+
+    int index = GetPlayerIndex(id);
+    if(index == -1)
+    {
+        index = (*players).size();
+        (*players).emplace_back(v3(8,23,8), clientBundle->level->DOS);
+        (*players)[index].id = id;
+
+    }
+    else
+    {
+        std::cout << index << " is leaving.\n";
+        (*players)[index].eraseMe = true;
+    }
+}
+
+void Client::HandlePositions(ENetEvent& ev)
+{
+    if(ev.packet->dataLength % 7 != 0 || ev.packet->dataLength < 6)
+        return;
+
+    float* data = reinterpret_cast<float *>(ev.packet->data);
+
+    for(int i = 0; i < players->size(); i++)
+    {
+        int index = i*7;
+
+        if(data[index] == clientBundle->localPlayer->id)
+            continue;
+
+        (*players)[index].position = v3(data[index+1],data[index+2],data[index+3]);
+        (*players)[index].velocity = v3(data[index+4],data[index+5],data[index+6]);
+    }
 }
 
 void Client::Run()
@@ -44,7 +109,7 @@ void Client::Run()
     }
 
     //enet_address_set_host(&address, "73.137.115.94");
-    enet_address_set_host(&address, "10.0.0.11");
+    enet_address_set_host(&address, "10.0.0.9");
     address.port = 47623; // ISOBE as phone number
 
     peer = enet_host_connect(client, &address, 1, 0);
@@ -69,19 +134,15 @@ void Client::Run()
     while(running)
     {
         SendPlayerData();
-        while(enet_host_service(client, &event, 1000) > 0)
+        while(enet_host_service(client, &event, 50) > 0)
         {
             switch(event.type)
             {
                 case ENET_EVENT_TYPE_CONNECT:
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:
-                    printf ("A packet of length %zu containing %s was received from %x:%u on channel %u.\n",
-                            event.packet -> dataLength,
-                            event.packet -> data,
-                            event.peer -> address.host,
-                            event.peer -> address.port,
-                            event.channelID);
+                    HandleID(event);
+                    HandlePositions(event);
                     enet_packet_destroy (event.packet);
                     break;
                 case ENET_EVENT_TYPE_NONE:
@@ -118,5 +179,8 @@ void Client::StartThread(ClientBundle &clientBundle)
 {
     clientBundle.running = &running;
     this->clientBundle = &clientBundle;
+
+    SetLevel(*clientBundle.level);
+
     clientThread = std::thread(&Client::Run, this);
 }

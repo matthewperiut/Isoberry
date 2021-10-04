@@ -21,12 +21,13 @@ public:
     DrawOrderSystem DOS;
     std::string name = "";
 
-    std::vector<Player>* playersPtr;
+    std::vector<Player> players;
 public:
     Level();
     Level(olc::PixelGameEngine& g) : engine( &g )
     { DOS = DrawOrderSystem(g); }
-    void LoadFromFile(std::string path);
+    void LoadFromFile(std::string path, bool withImages = true);
+    void Loop();
     ~Level();
 
     void DrawAll();

@@ -34,9 +34,14 @@ public:
     // Network variables
     int id = -1;
     ENetPeer* peer;
+    uint32_t host;
+    uint16_t port;
+    bool constructed = false;
+    bool eraseMe = false;
 public:
     void Construct()
     {
+        constructed = true;
         isPlayer = true;
         isEntity = true;
 
