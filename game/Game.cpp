@@ -63,13 +63,14 @@ bool Game::OnUserUpdate(float fElapsedTime)
     test.Move(fElapsedTime);
 
     l.DOS.DrawAll();
-    l.Loop();
+    l.Loop(fElapsedTime);
     DrawDecal(olc::vf2d(0,0), debugOverlayDecal);
     return true;
 }
 
 bool Game::OnUserDestroy()
 {
+    garbage.DeleteAll();
     *clientBundle.running = false;
     client.clientThread.join();
     delete debugOverlay;

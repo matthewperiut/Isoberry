@@ -9,6 +9,7 @@
 #include "collision/Physical.h"
 #include "../../utility/AssetPath.h"
 #include "Shadow.h"
+#include "../../header/GlobalVariable.h"
 
 class Player : public Physical
 {
@@ -69,8 +70,8 @@ public:
     {
         for(int i = 0; i < spriteSheets.size(); i++)
         {
-            delete spriteSheets[i];
-            delete decalSpriteSheets[i];
+            garbage.sprites.push_back(spriteSheets[i]);
+            garbage.decals.push_back(decalSpriteSheets[i]);
         }
         DOS->RemoveObject(*this);
     }

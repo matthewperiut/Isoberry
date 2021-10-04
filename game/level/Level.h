@@ -27,7 +27,7 @@ public:
     Level(olc::PixelGameEngine& g) : engine( &g )
     { DOS = DrawOrderSystem(g); }
     void LoadFromFile(std::string path, bool withImages = true);
-    void Loop();
+    void Loop(float fElapsedTime);
     ~Level();
 
     void DrawAll();

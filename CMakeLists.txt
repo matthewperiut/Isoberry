@@ -45,6 +45,8 @@ file (GLOB MY_SRC
         "game/network/server/*.h"
         "game/network/client/*.cpp"
         "game/network/client/*.h"
+        "game/tool/memory/*.cpp"
+        "game/tool/memory/*.h"
         "game/level/*.cpp"
         "game/level/*.h"
         "game/*.cpp"

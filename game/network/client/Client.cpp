@@ -109,7 +109,7 @@ void Client::Run()
     }
 
     //enet_address_set_host(&address, "73.137.115.94");
-    enet_address_set_host(&address, "10.0.0.9");
+    enet_address_set_host(&address, "10.0.0.11");
     address.port = 47623; // ISOBE as phone number
 
     peer = enet_host_connect(client, &address, 1, 0);

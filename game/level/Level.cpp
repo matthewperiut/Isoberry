@@ -70,14 +70,14 @@ Level::Level()
 
 }
 
-void Level::Loop()
+void Level::Loop(float fElapsedTime)
 {
-
     for(int i = 0; i < players.size(); i++)
     {
         if(!players[i].constructed)
             players[i].Construct();
         if(players[i].eraseMe)
             players.erase(players.begin() + i);
+        players[i].Move(fElapsedTime);
     }
 }

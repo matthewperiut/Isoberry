@@ -96,26 +96,25 @@ void Server::HandlePlayerPosition(ENetEvent& ev)
     p.velocity = v3(d[3],d[4],d[5]);
 
     // Send back other people's data
-    int it = 0; // it for iterator
-    float data[1024];
 
     for(int i = 0; i < (*players).size(); i++)
     {
-        data[it] = (*players)[i].id;
+        float data[7];
+        data[0] = (*players)[i].id;
         v3& pos = (*players)[i].position;
-        data[it+1] = (pos.x);
-        data[it+2] = (pos.y);
-        data[it+3] = (pos.z);
+        data[1] = (pos.x);
+        data[2] = (pos.y);
+        data[3] = (pos.z);
         v3& vel = (*players)[i].velocity;
-        data[it+4] = (vel.x);
-        data[it+5] = (vel.y);
-        data[it+6] = (vel.z);
-        it += 7;
+        data[4] = (vel.x);
+        data[5] = (vel.y);
+        data[6] = (vel.z);
+        ENetPacket* packet = enet_packet_create(data,(*players).size()*7*sizeof(float),ENET_PACKET_FLAG_RELIABLE);
+        enet_peer_send(ev.peer, 0, packet);
     }
 
-    ENetPacket* packet = enet_packet_create(data,(*players).size()*7*sizeof(float),ENET_PACKET_FLAG_RELIABLE);
     //enet_host_broadcast(server,ENET_PACKET_FLAG_RELIABLE,packet);
-    enet_peer_send(ev.peer, 0, packet);
+
 }
 
 void Server::Run()
