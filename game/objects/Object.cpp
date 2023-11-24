@@ -38,6 +38,7 @@ bool Object::UpdateDec()
     {
         this->dec = img->GetDecPtr();
     }
+    return true;
 }
 
 std::string& Object::GetFilePath()
