@@ -18,7 +18,6 @@ void abortServer(int signum)
     if(globalServerPointer != nullptr)
     {
         globalServerPointer->running = false;
-        globalServerPointer->serverThread.join();
         exit(signum);
     }
 }

@@ -10,15 +10,11 @@
 #include <enet/enet.h>
 #include "../../objects/Player.h"
 #include "../../level/Level.h"
-#include "ServerGUI.h"
 
 class Server
 {
 public:
     bool running = true;
-
-    ServerGUI gui = ServerGUI(running);
-    std::thread serverThread;
 
     ENetAddress address;
     ENetHost *server;

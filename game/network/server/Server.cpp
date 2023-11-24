@@ -11,14 +11,9 @@ Server::Server()
     globalServerPointer = this;
     signal(SIGABRT, abortServer);
 
-    serverThread = std::thread(&Server::Run, this);
-
     levels.emplace_back();
     levels[0].LoadFromFile(GetAssetPath() + "levels/basis.txt", false);
     players = &levels[0].players;
-
-    if(gui.Construct(256,144,4,4,false,true))
-        gui.Start();
 }
 
 int Server::GetPlayerIndex(ENetPeer* peer)
@@ -57,7 +52,7 @@ void Server::AddPlayer(ENetEvent& ev)
     (*players)[index].port = ev.peer->address.port;
     (*players)[index].peer = ev.peer;
 
-    gui.InsertMessage(std::to_string(id) + " joined.");
+    printf("%d joined.\n", id);
 
     // Tell everyone about this player joining, also tell the player their ID
     SendByte(ev, id, 0,true);
@@ -74,7 +69,7 @@ void Server::AddPlayer(ENetEvent& ev)
 void Server::RemovePlayer(ENetEvent& ev)
 {
     int index = GetPlayerIndex(ev.peer);
-    gui.InsertMessage(std::to_string((*players)[index].id) + " left.");
+    printf("%d left.\n", (*players)[index].id);
 
     // Tell everyone the player is leaving
     SendByte(ev, (*players)[index].id, 0, true);
@@ -119,7 +114,7 @@ void Server::HandlePlayerPosition(ENetEvent& ev)
 
 void Server::Run()
 {
-    gui.InsertMessage("Starting Server...");
+    printf("Starting Server...\n");
 
     address.host = ENET_HOST_ANY;
     address.port = 47623; // ISOBE as phone number
@@ -128,11 +123,11 @@ void Server::Run()
 
     if (server == nullptr)
     {
-        gui.InsertMessage("[Stopping Server] Error Creating Server");
+        printf("[Stopping Server] Error Creating Server\n");
         return;
     }
 
-    gui.InsertMessage("Port:" + std::to_string(address.port));
+    printf("Port: %d", address.port);
 
 
 
@@ -156,12 +151,11 @@ void Server::Run()
             }
         }
     }
-    gui.InsertMessage("Stopping Server...");
+    printf("Stopping Server...\n");
 }
 
 Server::~Server()
 {
     running = false;
-    serverThread.join();
     enet_host_destroy(server);
 }
