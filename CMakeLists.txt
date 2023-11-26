@@ -1,60 +1,56 @@
-cmake_minimum_required(VERSION 3.19)
-
+cmake_minimum_required(VERSION 3.27)
 project(Isoberry)
 
-# CMAKE extensions
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(CMAKE_CXX_STANDARD 17)
 
-# sudo dnf groupinstall "Development Tools" "Development Libraries"
-# sudo dnf install glew-devel SDL2-devel SDL2_image-devel glm-devel freetype-devel g++ enet-devel.x86_64 gtk3-devel
-set(CMAKE_CXX_STANDARD 20)
-set(ISOBERRY_VERSION 0.1)
-
-if(${CMAKE_SYSTEM} MATCHES "Linux")
-    set(LINUX 1)
-endif(${CMAKE_SYSTEM} MATCHES "Linux")
+set(OpenGL_GL_PREFERENCE GLVND)
+set(qu3e_build_static TRUE)
+add_subdirectory("submodules/qu3e")
+add_subdirectory("submodules/olcPixelGameEngine")
+add_subdirectory("submodules/olcNet")
+add_subdirectory("submodules/fpng")
+add_subdirectory("submodules/stbImage")
 
 file (GLOB MY_SRC
-        "header/*.h"
-        "main.cpp"
-        "utility/*.cpp"
-        "utility/*.h"
-        "utility/settings/*.cpp"
-        "utility/settings/*.h"
-        "game/objects/collision/*.cpp"
-        "game/objects/collision/*.h"
-        "game/objects/animation/*.cpp"
-        "game/objects/animation/*.h"
-        "game/objects/*.cpp"
-        "game/objects/*.h"
-        "game/editor/*.cpp"
-        "game/editor/*.h"
-        "game/tool/*.cpp"
-        "game/tool/*.h"
-        "game/tool/sprite_saving/*.cpp"
-        "game/tool/sprite_saving/*.h"
-        "game/tool/draw_sprites/*.cpp"
-        "game/tool/draw_sprites/*.h"
-        "game/tool/layering/*.cpp"
-        "game/tool/layering/*.h"
-        "game/tool/input/*.cpp"
-        "game/tool/input/*.h"
-        "game/tool/art/*.cpp"
-        "game/tool/art/*.h"
-        "game/network/server/*.cpp"
-        "game/network/server/*.h"
-        "game/network/client/*.cpp"
-        "game/network/client/*.h"
-        "game/tool/memory/*.cpp"
-        "game/tool/memory/*.h"
-        "game/level/*.cpp"
-        "game/level/*.h"
-        "game/*.cpp"
-        "game/*.h")
+        "src/header/*.h"
+        "src/main.cpp"
+        "src/utility/*.cpp"
+        "src/utility/*.h"
+        "src/utility/settings/*.cpp"
+        "src/utility/settings/*.h"
+        "src/objects/collision/*.cpp"
+        "src/objects/collision/*.h"
+        "src/objects/animation/*.cpp"
+        "src/objects/animation/*.h"
+        "src/objects/*.cpp"
+        "src/objects/*.h"
+        "src/editor/*.cpp"
+        "src/editor/*.h"
+        "src/tool/*.cpp"
+        "src/tool/*.h"
+        "src/tool/sprite_saving/*.cpp"
+        "src/tool/sprite_saving/*.h"
+        "src/tool/draw_sprites/*.cpp"
+        "src/tool/draw_sprites/*.h"
+        "src/tool/layering/*.cpp"
+        "src/tool/input/*.cpp"
+        "src/tool/input/*.h"
+        "src/tool/art/*.cpp"
+        "src/tool/art/*.h"
+        "src/network/server/*.cpp"
+        "src/network/server/*.h"
+        "src/network/client/*.cpp"
+        "src/network/client/*.h"
+        "src/tool/memory/*.cpp"
+        "src/tool/memory/*.h"
+        "src/level/*.cpp"
+        "src/level/*.h"
+        "src/*.cpp"
+        "src/*.h")
 
 if (WIN32 OR LINUX)
     add_executable(Isoberry ${MY_SRC})
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+    file(COPY resources/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
 endif (WIN32 OR LINUX)
 
 if (APPLE)
@@ -62,9 +58,9 @@ if (APPLE)
 
     set(CUR_TARGET Isoberry)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
+    file(COPY resources/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Isoberry.app/Contents/assets)
 
-    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/app/icon/isoberry.icns)
+    set(myApp_ICON resources/app/icon/isoberry.icns)
     set_source_files_properties(${myApp_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 
@@ -75,11 +71,25 @@ if (APPLE)
             MACOSX_BUNDLE_BUNDLE_NAME ${CUR_TARGET}
             MACOSX_BUNDLE_BUNDLE_VERSION ${ISOBERRY_VERSION}
             MACOSX_BUNDLE_SHORT_VERSION_STRING ${ISOBERRY_VERSION}
-            )
+    )
 
     set(OPENSSL_INCLUDE_DIR /usr/local/opt/openssl)
     set(OPENSSL_CRYPTO_LIBRARY /usr/local/opt/openssl/lib)
 endif(APPLE)
+
+target_link_libraries(Isoberry
+        PRIVATE qu3e)
+
+target_include_directories(Isoberry PRIVATE
+        "submodules/olcPixelGameEngine"
+        "submodules/olcNet"
+        "submodules/fpng"
+        "submodules/stbImage"
+        "submodules/qu3e")
+
+if(${CMAKE_SYSTEM} MATCHES "Linux")
+    set(LINUX 1)
+endif(${CMAKE_SYSTEM} MATCHES "Linux")
 
 if (UNIX)
     # X11
@@ -87,30 +97,28 @@ if (UNIX)
         find_package(X11 REQUIRED)
         include_directories(${X11_INCLUDE_DIR})
         link_directories(${X11_LIBRARIES})
-        target_link_libraries(Isoberry ${X11_LIBRARIES})
+        target_link_libraries(Isoberry PRIVATE ${X11_LIBRARIES})
     endif(LINUX)
     # GLUT
     if(APPLE)
         find_package(GLUT REQUIRED)
         include_directories(${GLUT_INCLUDE_DIR})
         link_directories(${GLUT_LIBRARIES})
-        target_link_libraries(Isoberry ${GLUT_LIBRARIES})
+        target_link_libraries(Isoberry PRIVATE ${GLUT_LIBRARIES})
     endif(APPLE)
 
     find_package(OpenGL REQUIRED)
     include_directories(${OPENGL_INCLUDE_DIR})
     link_directories(${OPENGL_LIBRARIES})
-    target_link_libraries(Isoberry ${OPENGL_LIBRARIES})
+    target_link_libraries(Isoberry PRIVATE ${OPENGL_LIBRARIES})
 
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
-    target_link_libraries(Isoberry Threads::Threads)
-
+    target_link_libraries(Isoberry PRIVATE Threads::Threads)
 endif (UNIX)
 
-find_package(OpenSSL REQUIRED)
-find_package(ENet REQUIRED)
-include_directories(${ENET_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR})
+find_package(unofficial-enet CONFIG REQUIRED)
+target_link_libraries(Isoberry PRIVATE unofficial::enet::enet)
 find_package(asio CONFIG REQUIRED)
 add_definitions(-DASIO_STANDALONE)
-target_link_libraries(Isoberry ${OPEN_SSL_LIBRARY} asio::asio ${ENET_LIBRARIES})
+target_link_libraries(Isoberry PRIVATE ${OPEN_SSL_LIBRARY} asio::asio ${ENET_LIBRARIES})

@@ -1,5 +1,6 @@
-# Kiwifield
-This is the goal and inspiration.
-MMORPG with one dynamic world, but first a isometric game engine.
-![inspiration](https://pbs.twimg.com/media/E0jK-O3WYAA1uKW?format=png&name=large)
-https://twitter.com/jmw327
+# Isoberry
+intended as a fun technical demo of various concepts for games
+- Networking
+- Collision
+- 3D world represented in 2D pixel art
+- Isometric perspective
