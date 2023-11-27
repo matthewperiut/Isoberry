@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 project(Isoberry)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -48,10 +48,16 @@ file (GLOB MY_SRC
         "src/*.cpp"
         "src/*.h")
 
+
 if (WIN32 OR LINUX)
     add_executable(Isoberry ${MY_SRC})
     file(COPY resources/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
 endif (WIN32 OR LINUX)
+
+if (WIN32)
+    # Windows moment
+    target_compile_definitions(Isoberry PRIVATE NOMINMAX)
+endif (WIN32)
 
 if (APPLE)
     add_compile_options(-stdlib=libc++ -framework Carbon)
