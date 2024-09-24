@@ -5,6 +5,9 @@
 #include "Native.h"
 #include "Settings.h"
 #include "Resolution.h"
+#include <iostream>
+#include <string>
+#include <fstream>
 
 Settings::Settings(std::string file)
 {

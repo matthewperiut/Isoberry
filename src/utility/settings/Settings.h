@@ -5,9 +5,6 @@
 #pragma once
 
 #include <olcPixelGameEngine.h>
-#include <iostream>
-#include <string>
-#include <fstream>
 
 class Settings
 {

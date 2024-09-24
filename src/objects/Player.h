@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <enet/enet.h>
 #include "../tool/v3.h"
 #include "collision/Physical.h"
 #include "../utility/AssetPath.h"
@@ -34,7 +33,6 @@ private:
 public:
     // Network variables
     int id = -1;
-    ENetPeer* peer;
     uint32_t host;
     uint16_t port;
     bool constructed = false;

@@ -37,9 +37,6 @@ bool Game::OnUserCreate()
     Shadow::CreateImages();
     test.Construct();
 
-    clientBundle.localPlayer = &test;
-    clientBundle.level = &l;
-    client.StartThread(clientBundle);
     return true;
 }
 
@@ -71,8 +68,6 @@ bool Game::OnUserUpdate(float fElapsedTime)
 bool Game::OnUserDestroy()
 {
     garbage.DeleteAll();
-    *clientBundle.running = false;
-    client.clientThread.join();
     delete debugOverlay;
     delete debugOverlayDecal;
     return true;

@@ -4,10 +4,7 @@ project(Isoberry)
 set(CMAKE_CXX_STANDARD 17)
 
 set(OpenGL_GL_PREFERENCE GLVND)
-set(qu3e_build_static TRUE)
-add_subdirectory("submodules/qu3e")
 add_subdirectory("submodules/olcPixelGameEngine")
-add_subdirectory("submodules/olcNet")
 add_subdirectory("submodules/fpng")
 add_subdirectory("submodules/stbImage")
 
@@ -37,10 +34,6 @@ file (GLOB MY_SRC
         "src/tool/input/*.h"
         "src/tool/art/*.cpp"
         "src/tool/art/*.h"
-        "src/network/server/*.cpp"
-        "src/network/server/*.h"
-        "src/network/client/*.cpp"
-        "src/network/client/*.h"
         "src/tool/memory/*.cpp"
         "src/tool/memory/*.h"
         "src/level/*.cpp"
@@ -60,7 +53,7 @@ if (WIN32)
 endif (WIN32)
 
 if (APPLE)
-    add_compile_options(-stdlib=libc++ -framework Carbon)
+    add_compile_options(-stdlib=libc++)
 
     set(CUR_TARGET Isoberry)
     set(MACOSX_BUNDLE_ICON_FILE isoberry.icns)
@@ -83,15 +76,10 @@ if (APPLE)
     set(OPENSSL_CRYPTO_LIBRARY /usr/local/opt/openssl/lib)
 endif(APPLE)
 
-target_link_libraries(Isoberry
-        PRIVATE qu3e)
-
 target_include_directories(Isoberry PRIVATE
         "submodules/olcPixelGameEngine"
-        "submodules/olcNet"
         "submodules/fpng"
-        "submodules/stbImage"
-        "submodules/qu3e")
+        "submodules/stbImage")
 
 if(${CMAKE_SYSTEM} MATCHES "Linux")
     set(LINUX 1)
@@ -123,8 +111,3 @@ if (UNIX)
     target_link_libraries(Isoberry PRIVATE Threads::Threads)
 endif (UNIX)
 
-find_package(unofficial-enet CONFIG REQUIRED)
-target_link_libraries(Isoberry PRIVATE unofficial::enet::enet)
-find_package(asio CONFIG REQUIRED)
-add_definitions(-DASIO_STANDALONE)
-target_link_libraries(Isoberry PRIVATE ${OPEN_SSL_LIBRARY} asio::asio ${ENET_LIBRARIES})
